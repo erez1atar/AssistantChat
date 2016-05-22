@@ -29,14 +29,14 @@ import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
 import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivityLastMsg extends AppCompatActivity {
 
     private IChatController controller;
     private ListView conversationList;
     private EditText sendingMsg;
     private Button sendButton;
     private Button endConversationButton;
-
+    private Button continueChat;
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
     private IServerMediator mediator;
@@ -57,15 +57,10 @@ public class ChatActivity extends AppCompatActivity {
 
         conversationList = (ListView) findViewById(R.id.conversation_list);
         endConversationButton = (Button) findViewById(R.id.end_convrs_button);
+        continueChat = (Button) findViewById(R.id.end_convrs_button);
 
         sendingMsg = (EditText) findViewById(R.id.sending_msg);
         sendButton = (Button) findViewById(R.id.send_button);
-        endConversationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getMessagesDB() )
+        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getLastMessagesDB() )
         {
             @Override
             protected void populateView(View view, ChatMessage message, int i) {
@@ -102,6 +97,14 @@ public class ChatActivity extends AppCompatActivity {
 //        adapterList = new MessagesAdapter(this, R.layout.item_list);
 //        adapterList.setMsgsArr(getLastMessages());
         conversationList.setAdapter(adapterList);
+
+        continueChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityRouter.changeActivity(ChatActivityLastMsg.this, ChatActivity.class);
+            }
+        });
+
     }
 
 

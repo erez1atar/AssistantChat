@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
-    tools:context=".chat_ui.ChatActivity"
+    tools:context=".chat_ui.ChatActivityLastMsg"
     android:weightSum="100" >
 
     <!--<TextView-->
@@ -35,25 +35,16 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:orientation="horizontal"
-        tools:context=".chat_ui.ChatActivity"
+        tools:context=".chat_ui.ChatActivityLastMsg"
         android:layout_weight="10" >
 
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="end conversation"
-            android:id="@+id/end_convrs_button"
-            android:layout_weight="5"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:text="continue"
             android:id="@+id/cont_button"
-            android:layout_weight="5"
+            android:layout_weight="10"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal" />
 
