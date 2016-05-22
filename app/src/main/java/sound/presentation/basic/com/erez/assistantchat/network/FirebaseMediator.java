@@ -3,6 +3,7 @@ package sound.presentation.basic.com.erez.assistantchat.network;
 import android.util.Log;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
@@ -22,6 +23,9 @@ public class FirebaseMediator implements IServerMediator
     private static final String AVAILABLE_ASSISTANT_FLAG_CHILD = "available";
 
     private Firebase fb;
+    private OpenSessionsListener openSessionsListener;
+    private ValueEventListener valueEventListener;
+
 
     public FirebaseMediator()
     {
@@ -36,4 +40,47 @@ public class FirebaseMediator implements IServerMediator
     {
         fb.child(ASSISTANTS_DETAILS_CHILD).child(App.getiModel().getAssistantName()).child(AVAILABLE_ASSISTANT_FLAG_CHILD).setValue(available);
     }
+
+    @Override
+    public void registerOpenSessionsListener(OpenSessionsListener listener)
+    {
+        openSessionsListener = listener;
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.hasChild(App.getiModel().getAssistantName()))
+                {
+                    openSessionsListener.onChatOpened();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError)
+            {
+
+            }
+        };
+        fb.child(OPENED_SESSIONS_CHILD).addValueEventListener(valueEventListener);
+    }
+
+    @Override
+    public void clearOpenSessionsListener()
+    {
+        openSessionsListener = null;
+        fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
+    }
+
+    @Override
+    public void addActiveAssistant(String assistantName)
+    {
+        fb.child(ACTIVE_ASSISTANTS_CHILD).push().setValue(assistantName);
+    }
+
+    @Override
+    public void removeActiveAssistant(String assistantName)
+    {
+        fb.child(ACTIVE_ASSISTANTS_CHILD).child(assistantName).removeValue();
+    }
+
 }

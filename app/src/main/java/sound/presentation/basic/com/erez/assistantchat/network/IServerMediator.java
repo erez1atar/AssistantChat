@@ -6,4 +6,14 @@ package sound.presentation.basic.com.erez.assistantchat.network;
 public interface IServerMediator
 {
     void changeAvailableStatus(boolean available);
+
+    void registerOpenSessionsListener(OpenSessionsListener listener);
+    void clearOpenSessionsListener();
+    void addActiveAssistant(String assistantName);
+    void removeActiveAssistant(String assistantName);
+
+    public interface OpenSessionsListener
+    {
+        void onChatOpened();
+    }
 }
