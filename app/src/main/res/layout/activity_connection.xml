@@ -17,5 +17,5 @@
         android:layout_height="wrap_content"
         android:text="Available"
         android:layout_gravity="center"
-        android:id="@+id/switch1"/>
+        android:id="@+id/availableSwitch"/>
 </LinearLayout>

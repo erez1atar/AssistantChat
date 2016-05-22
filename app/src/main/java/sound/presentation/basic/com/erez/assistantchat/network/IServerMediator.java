@@ -5,5 +5,5 @@ package sound.presentation.basic.com.erez.assistantchat.network;
  */
 public interface IServerMediator
 {
-
+    void changeAvailableStatus(boolean available);
 }

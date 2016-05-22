@@ -12,6 +12,12 @@ public class App extends Application
 {
     private static IModel iModel;
     private static IServerMediator serverMediator;
+    private static App Instance;
+
+    public App()
+    {
+        Instance = this;
+    }
 
     public static IModel getiModel()
     {
@@ -20,6 +26,11 @@ public class App extends Application
             iModel = new Model();
         }
         return iModel;
+    }
+
+    public static App getInstance()
+    {
+        return Instance;
     }
 
     public static IServerMediator getServerMediator()
