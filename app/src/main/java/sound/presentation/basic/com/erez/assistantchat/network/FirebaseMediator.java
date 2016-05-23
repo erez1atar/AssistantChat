@@ -8,6 +8,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.firebase.security.token.TokenGenerator;
+import com.firebase.security.token.TokenOptions;
 
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import java.util.HashMap;
@@ -41,14 +42,12 @@ public class FirebaseMediator implements IServerMediator
     private ValueEventListener valueEventListener;
     private String admin_token;
 
-
     public FirebaseMediator()
     {
         Firebase.setAndroidContext(App.getInstance());
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
         fb = new Firebase(FIREBASE_ADDRESS);
     }
-
 
     @Override
     public void changeAvailableStatus(boolean available)
@@ -59,13 +58,13 @@ public class FirebaseMediator implements IServerMediator
     @Override
     public void login()
     {
-        if (admin_token == null)
-        {
-            Map<String, Object> payload = new HashMap<>();
-            payload.put("uid", UUID.randomUUID());
-            TokenGenerator tokenizer = new TokenGenerator(App.getInstance().getString(R.string.firebase_secret));
-            admin_token = tokenizer.createToken(payload);
-        }
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("uid", UUID.randomUUID());
+        payload.put("password", "42");
+        TokenOptions options = new TokenOptions();
+        options.setAdmin(true);
+        TokenGenerator tokenizer = new TokenGenerator(App.getInstance().getString(R.string.firebase_secret));
+        String token = tokenizer.createToken(payload, options);
     }
 
     @Override
