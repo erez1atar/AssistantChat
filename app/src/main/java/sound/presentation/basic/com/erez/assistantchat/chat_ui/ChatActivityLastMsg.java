@@ -29,15 +29,12 @@ import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
 import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivityLastMsg extends AppCompatActivity {
 
     private IChatController controller;
     private ListView conversationList;
-    private EditText sendingMsg;
-    private Button sendButton;
-    private Button endConversationButton;
+    private Button continueChat;
     private TextView userIP;
-
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
     private IServerMediator mediator;
@@ -57,34 +54,10 @@ public class ChatActivity extends AppCompatActivity {
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
 
         conversationList = (ListView) findViewById(R.id.conversation_list);
-        endConversationButton = (Button) findViewById(R.id.end_convrs_button);
-        userIP = (TextView)  findViewById(R.id.user_ip);
+        continueChat = (Button) findViewById(R.id.end_convrs_button);
+        userIP = (TextView) findViewById(R.id.user_ip);
 
-        sendingMsg = (EditText) findViewById(R.id.sending_msg);
-        sendButton = (Button) findViewById(R.id.send_button);
-        endConversationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //String date, String sendingName get from server(fireBase) or another place
-
-                ////
-//                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
-                //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
-                ////
-                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), App.getiModel().getAssistantName() , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
-                sendingMsg.setText("");
-
-            }
-        });
-
-        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getMessagesDB() )
+        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getLastMessagesDB() )
         {
             @Override
             protected void populateView(View view, ChatMessage message, int i) {
@@ -105,6 +78,14 @@ public class ChatActivity extends AppCompatActivity {
 //        adapterList = new MessagesAdapter(this, R.layout.item_list);
 //        adapterList.setMsgsArr(getLastMessages());
         conversationList.setAdapter(adapterList);
+
+        continueChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityRouter.changeActivity(ChatActivityLastMsg.this, ChatActivity.class);
+            }
+        });
+
     }
 
 

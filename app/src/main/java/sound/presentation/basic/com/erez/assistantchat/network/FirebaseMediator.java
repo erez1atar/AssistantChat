@@ -3,12 +3,14 @@ package sound.presentation.basic.com.erez.assistantchat.network;
 import android.util.Log;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.firebase.security.token.TokenGenerator;
 import com.firebase.security.token.TokenOptions;
 
+import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -27,8 +29,18 @@ public class FirebaseMediator implements IServerMediator
     private static final String ASSISTANTS_DETAILS_CHILD = "assistants";
     private static final String OPENED_SESSIONS_CHILD = "opened_sessions";
     private static final String AVAILABLE_ASSISTANT_FLAG_CHILD = "available";
+    private static final String MESSAGES_CHILD = "chat";
+    private static final String LAST_MESSAGES_CHILD = "last_messages_child";
+    public static final String CONNECTED = "connected";
+
 
     private Firebase fb;
+
+    private ValueEventListener listener;
+
+    private OpenSessionsListener openSessionsListener;
+    private ValueEventListener valueEventListener;
+    private String admin_token;
 
     public FirebaseMediator()
     {
@@ -54,4 +66,78 @@ public class FirebaseMediator implements IServerMediator
         TokenGenerator tokenizer = new TokenGenerator(App.getInstance().getString(R.string.firebase_secret));
         String token = tokenizer.createToken(payload, options);
     }
+
+    @Override
+    public void registerOpenSessionsListener(OpenSessionsListener listener)
+    {
+        openSessionsListener = listener;
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.hasChild(App.getiModel().getAssistantName()))
+                {
+                    openSessionsListener.onChatOpened();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError)
+            {
+
+            }
+        };
+        fb.child(OPENED_SESSIONS_CHILD).addValueEventListener(valueEventListener);
+    }
+
+    @Override
+    public void clearOpenSessionsListener()
+    {
+        openSessionsListener = null;
+        fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
+    }
+
+    @Override
+    public void addActiveAssistant(String assistantName)
+    {
+        fb.child(ACTIVE_ASSISTANTS_CHILD).push().setValue(assistantName);
+    }
+
+    @Override
+    public void removeActiveAssistant(String assistantName)
+    {
+        fb.child(ACTIVE_ASSISTANTS_CHILD).child(assistantName).removeValue();
+    }
+
+
+    public void setListener(ValueEventListener listener) {
+        this.listener = listener;
+    }
+
+    public void endConversation() {
+        Log.d("Debug", "endConversation");
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(CONNECTED).setValue(false);
+    }
+
+    public Firebase getMessagesDB()
+    {
+        return fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(MESSAGES_CHILD);
+    }
+
+    public Firebase getLastMessagesDB()
+    {
+        return fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(LAST_MESSAGES_CHILD);
+    }
+
+    public void executeListeningConnected() {
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(CONNECTED).addValueEventListener(listener);
+        //.addListenerForSingleValueEvent(listener);//child(CONNECTED).
+    }
+
+    public void sendMessage(IMessage message)
+    {
+        //fb.child(MESSAGES_CHILD).push().setValue(message);
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(MESSAGES_CHILD).push().setValue(message);
+    }
+
 }

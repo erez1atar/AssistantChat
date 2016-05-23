@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
-    tools:context=".chat_ui.ChatActivity"
+    tools:context=".chat_ui.ChatActivityLastMsg"
     android:weightSum="100" >
 
     <!--<TextView-->
@@ -17,11 +17,49 @@
         <!--android:layout_weight="80"-->
         <!--android:id="@+id/conversation_msgs" />-->
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="End conversation"
+        android:id="@+id/end_convrs_button"
+        android:layout_weight="10"
+        android:layout_marginBottom="2dp"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="User IP: "
+            android:id="@+id/user_ip_title"
+            android:layout_weight="5"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="User IP: "
+            android:id="@+id/user_ip"
+            android:layout_weight="5"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/conversation_list"
-        android:layout_weight="90"
+        android:layout_weight="70"
         xmlns:android="http://schemas.android.com/apk/res/android"
         >
 
@@ -35,7 +73,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:orientation="horizontal"
-        tools:context=".chat_ui.ChatActivity"
+        tools:context=".chat_ui.ChatActivityLastMsg"
         android:layout_weight="10" >
 
     <EditText
