@@ -23,6 +23,10 @@
         <activity android:name=".chat_ui.ChatActivityLastMsg">
 
         </activity>
+
+        <activity android:name=".chat_ui.ChatActivity">
+
+        </activity>
     </application>
 
 </manifest>

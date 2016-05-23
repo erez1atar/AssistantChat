@@ -23,7 +23,6 @@ import sound.presentation.basic.com.erez.assistantchat.misc.App;
  */
 public class FirebaseMediator implements IServerMediator
 {
-
     private static final String FIREBASE_ADDRESS = "https://incandescent-inferno-5809.firebaseio.com";
     private static final String ACTIVE_ASSISTANTS_CHILD = "active_assistants";
     private static final String ASSISTANTS_DETAILS_CHILD = "assistants";
@@ -40,7 +39,6 @@ public class FirebaseMediator implements IServerMediator
     private ValueEventListener listener;
     private OpenSessionsListener openSessionsListener;
     private ValueEventListener valueEventListener;
-    private String admin_token;
 
     public FirebaseMediator()
     {
@@ -59,7 +57,7 @@ public class FirebaseMediator implements IServerMediator
     public void login()
     {
         Map<String, Object> payload = new HashMap<>();
-        payload.put("uid", UUID.randomUUID());
+        payload.put("uid", UUID.randomUUID().toString());
         payload.put("password", "42");
 
         TokenOptions options = new TokenOptions();
