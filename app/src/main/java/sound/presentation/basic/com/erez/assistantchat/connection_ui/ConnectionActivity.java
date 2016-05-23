@@ -22,7 +22,7 @@ public class ConnectionActivity extends AppCompatActivity
 
         final ControllerConnection controller = new ControllerConnection();
 
-        App.getServerMediator().addActiveAssistant(App.getiModel().getAssistantName()); // TODO: 22/05/2016 Remove
+        App.getServerMediator().addActiveAssistant(App.getiModel().getAssistantName());
 
         final Switch availableSwitch = (Switch)findViewById(R.id.availableSwitch);
         if (availableSwitch != null)
@@ -41,6 +41,7 @@ public class ConnectionActivity extends AppCompatActivity
                         App.getServerMediator().clearOpenSessionsListener();
                     }
                 }
+                
             });
         }
 
