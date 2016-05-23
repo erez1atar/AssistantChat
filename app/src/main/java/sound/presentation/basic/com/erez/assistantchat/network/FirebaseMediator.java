@@ -125,7 +125,7 @@ public class FirebaseMediator implements IServerMediator
     @Override
     public void addActiveAssistant(String assistantName)
     {
-        fb.child(ACTIVE_ASSISTANTS_CHILD).push().setValue(assistantName);
+        fb.child(ACTIVE_ASSISTANTS_CHILD).child(assistantName).setValue(assistantName);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class FirebaseMediator implements IServerMediator
     }
 
     public void endConversation() {
-        Log.d("Debug", "endConversation");
+        Log.d("Debug", "FirebaseMediator::endConversation");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(CONNECTED).setValue(false);
     }
 
