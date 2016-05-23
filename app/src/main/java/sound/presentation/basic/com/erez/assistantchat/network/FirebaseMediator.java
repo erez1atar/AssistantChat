@@ -30,14 +30,14 @@ public class FirebaseMediator implements IServerMediator
     private static final String OPENED_SESSIONS_CHILD = "opened_sessions";
     private static final String AVAILABLE_ASSISTANT_FLAG_CHILD = "available";
     private static final String MESSAGES_CHILD = "chat";
-    private static final String LAST_MESSAGES_CHILD = "last_messages_child";
+    private static final String LAST_MESSAGES_CHILD = "last_messages";
+
+    private static final String TAG = "FirebaseMediator";
+
     public static final String CONNECTED = "connected";
 
-
     private Firebase fb;
-
     private ValueEventListener listener;
-
     private OpenSessionsListener openSessionsListener;
     private ValueEventListener valueEventListener;
     private String admin_token;
@@ -61,10 +61,25 @@ public class FirebaseMediator implements IServerMediator
         Map<String, Object> payload = new HashMap<>();
         payload.put("uid", UUID.randomUUID());
         payload.put("password", "42");
+
         TokenOptions options = new TokenOptions();
         options.setAdmin(true);
+
         TokenGenerator tokenizer = new TokenGenerator(App.getInstance().getString(R.string.firebase_secret));
-        String token = tokenizer.createToken(payload, options);
+        fb.authWithCustomToken(tokenizer.createToken(payload, options), new Firebase.AuthResultHandler()
+        {
+            @Override
+            public void onAuthenticated(AuthData authData)
+            {
+                Log.d(TAG + "_login", "authentication successful!");
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError)
+            {
+                Log.e(TAG + "_login", "authentication failed!");
+            }
+        });
     }
 
     @Override

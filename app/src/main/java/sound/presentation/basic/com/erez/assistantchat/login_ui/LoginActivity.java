@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 App.getiModel().setAssistantName(name.getText().toString());
+                App.getServerMediator().login();
                 Intent intent = new Intent(LoginActivity.this, ConnectionActivity.class);
                 startActivity(intent);
             }
