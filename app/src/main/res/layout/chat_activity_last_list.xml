@@ -16,40 +16,55 @@
         <!--android:layout_marginTop="10dp"-->
         <!--android:layout_weight="80"-->
         <!--android:id="@+id/conversation_msgs" />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_weight="8"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="User IP: "
+            android:id="@+id/user_ip_title"
+            android:layout_weight="4"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="User IP: "
+            android:id="@+id/user_ip"
+            android:layout_weight="4"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
 
     <ListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/conversation_list"
-        android:layout_weight="90"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_weight="84"
         >
 
     </ListView>
 
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal"
-        tools:context=".chat_ui.ChatActivityLastMsg"
-        android:layout_weight="10" >
-
 
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:text="continue"
             android:id="@+id/cont_button"
-            android:layout_weight="10"
+            android:layout_weight="7"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal" />
-
-    </LinearLayout>
-
 
 
 </LinearLayout>
