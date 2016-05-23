@@ -7,19 +7,14 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.firebase.security.token.TokenGenerator;
-import com.firebase.security.token.TokenOptions;
 
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 
 /**
- * Created by LENOVO on 22/05/2016.
+ * Get access to server methods utilizing firebase as a server-side.
  */
 public class FirebaseMediator implements IServerMediator
 {
@@ -39,6 +34,8 @@ public class FirebaseMediator implements IServerMediator
     private ValueEventListener listener;
     private OpenSessionsListener openSessionsListener;
     private ValueEventListener valueEventListener;
+    private String admin_email = App.getInstance().getResources().getString(R.string.firebase_admin_email);
+    private String admin_password = App.getInstance().getResources().getString(R.string.firebase_admin_password);
 
     public FirebaseMediator()
     {
@@ -56,15 +53,30 @@ public class FirebaseMediator implements IServerMediator
     @Override
     public void login()
     {
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("uid", UUID.randomUUID().toString());
-        payload.put("password", "42");
-
-        TokenOptions options = new TokenOptions();
-        options.setAdmin(true);
-
-        TokenGenerator tokenizer = new TokenGenerator(App.getInstance().getString(R.string.firebase_secret));
-        fb.authWithCustomToken(tokenizer.createToken(payload, options), new Firebase.AuthResultHandler()
+//        Map<String, Object> payload = new HashMap<>();
+//        payload.put("uid", UUID.randomUUID().toString());
+//        payload.put("password", "42");
+//
+//        TokenOptions options = new TokenOptions();
+//        options.setAdmin(true);
+//
+//        TokenGenerator tokenizer = new TokenGenerator(App.getInstance().getString(R.string.firebase_secret));
+//        String token = tokenizer.createToken(payload, options);
+//        fb.authWithCustomToken(token, new Firebase.AuthResultHandler()
+//        {
+//            @Override
+//            public void onAuthenticated(AuthData authData)
+//            {
+//                Log.d(TAG + "_login", "authentication successful!");
+//            }
+//
+//            @Override
+//            public void onAuthenticationError(FirebaseError firebaseError)
+//            {
+//                Log.e(TAG + "_login", firebaseError.getMessage());
+//            }
+//        });
+        fb.authWithPassword(admin_email, admin_password, new Firebase.AuthResultHandler()
         {
             @Override
             public void onAuthenticated(AuthData authData)
@@ -75,7 +87,7 @@ public class FirebaseMediator implements IServerMediator
             @Override
             public void onAuthenticationError(FirebaseError firebaseError)
             {
-                Log.e(TAG + "_login", "authentication failed!");
+                Log.e(TAG + "_login", firebaseError.getMessage());
             }
         });
     }
