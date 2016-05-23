@@ -46,7 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_activity_last_list);
+        setContentView(R.layout.chat_activity_list);
         Log.d("chatActivity","onCreate");
         controller = new MyChatController();
         mediator = App.getServerMediator();
@@ -65,7 +65,8 @@ public class ChatActivity extends AppCompatActivity {
         endConversationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mediator.endConversation();
+                finish();
             }
         });
 

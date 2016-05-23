@@ -6,7 +6,6 @@ import android.util.Log;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 

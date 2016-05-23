@@ -54,7 +54,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
 
         conversationList = (ListView) findViewById(R.id.conversation_list);
-        continueChat = (Button) findViewById(R.id.end_convrs_button);
+        continueChat = (Button) findViewById(R.id.cont_button);
         userIP = (TextView) findViewById(R.id.user_ip);
 
         adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getLastMessagesDB() )
