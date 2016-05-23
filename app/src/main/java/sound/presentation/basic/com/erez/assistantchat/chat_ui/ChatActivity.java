@@ -1,6 +1,7 @@
 package sound.presentation.basic.com.erez.assistantchat.chat_ui;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -55,7 +56,6 @@ public class ChatActivity extends AppCompatActivity {
         mediator.executeListeningConnected();
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
-
         conversationList = (ListView) findViewById(R.id.conversation_list);
         endConversationButton = (Button) findViewById(R.id.end_convrs_button);
         userIP = (TextView)  findViewById(R.id.user_ip);
