@@ -82,6 +82,7 @@ public class FirebaseMediator implements IServerMediator
             public void onAuthenticated(AuthData authData)
             {
                 Log.d(TAG + "_login", "authentication successful!");
+                Log.d(TAG + "_login", "UID is " + authData.getUid());
             }
 
             @Override
