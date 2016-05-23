@@ -66,6 +66,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediator.endConversation();
+                Log.d("OnClickListener - Chat" , "");
                 finish();
             }
         });
