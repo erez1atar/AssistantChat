@@ -34,7 +34,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
     private IChatController controller;
     private ListView conversationList;
     private Button continueChat;
-    private TextView userIP;
+//    private TextView userIP;
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
     private IServerMediator mediator;
@@ -55,7 +55,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 
         conversationList = (ListView) findViewById(R.id.conversation_list);
         continueChat = (Button) findViewById(R.id.cont_button);
-        userIP = (TextView) findViewById(R.id.user_ip);
+//        userIP = (TextView) findViewById(R.id.user_ip);
 
         adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getLastMessagesDB() )
         {
@@ -68,6 +68,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
                 TextView msg = (TextView) view.findViewById(R.id.message);
                 TextView date = (TextView) view.findViewById(R.id.date);
                 TextView senderName = (TextView) view.findViewById(R.id.sender_name);
+                TextView userIP = (TextView) findViewById(R.id.user_ip);
                 msg.setText(message.getMsg());
                 date.setText(message.getDate());
                 senderName.setText(message.getSendingName());
@@ -83,6 +84,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ActivityRouter.changeActivity(ChatActivityLastMsg.this, ChatActivity.class);
+//                finish();
             }
         });
 
