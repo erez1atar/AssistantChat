@@ -65,7 +65,8 @@ public class ChatActivity extends AppCompatActivity {
         endConversationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mediator.endConversation();
+                finish();
             }
         });
 
