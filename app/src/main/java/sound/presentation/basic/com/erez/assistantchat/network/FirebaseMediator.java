@@ -34,11 +34,12 @@ public class FirebaseMediator implements IServerMediator
 
 
     private Firebase fb;
+
+    private ValueEventListener listener;
+
     private OpenSessionsListener openSessionsListener;
     private ValueEventListener valueEventListener;
     private String admin_token;
-
-    private ValueEventListener listener;
 
 
     public FirebaseMediator()
@@ -139,5 +140,5 @@ public class FirebaseMediator implements IServerMediator
         //fb.child(MESSAGES_CHILD).push().setValue(message);
         fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(MESSAGES_CHILD).push().setValue(message);
     }
-
+    
 }
