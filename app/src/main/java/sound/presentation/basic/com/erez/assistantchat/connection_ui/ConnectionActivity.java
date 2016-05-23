@@ -41,7 +41,7 @@ public class ConnectionActivity extends AppCompatActivity
                         App.getServerMediator().clearOpenSessionsListener();
                     }
                 }
-                
+
             });
         }
 
