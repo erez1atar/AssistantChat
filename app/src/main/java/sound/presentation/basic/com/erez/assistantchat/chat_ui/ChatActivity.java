@@ -36,6 +36,7 @@ public class ChatActivity extends AppCompatActivity {
     private EditText sendingMsg;
     private Button sendButton;
     private Button endConversationButton;
+    private TextView userIP;
 
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
@@ -48,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.chat_activity_last_list);
         Log.d("chatActivity","onCreate");
         controller = new MyChatController();
-        mediator = (FirebaseMediator) App.getServerMediator();
+        mediator = App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
@@ -57,6 +58,7 @@ public class ChatActivity extends AppCompatActivity {
 
         conversationList = (ListView) findViewById(R.id.conversation_list);
         endConversationButton = (Button) findViewById(R.id.end_convrs_button);
+        userIP = (TextView)  findViewById(R.id.user_ip);
 
         sendingMsg = (EditText) findViewById(R.id.sending_msg);
         sendButton = (Button) findViewById(R.id.send_button);
@@ -96,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
                 msg.setText(message.getMsg());
                 date.setText(message.getDate());
                 senderName.setText(message.getSendingName());
+                userIP.setText(message.getIp());
             }
         };
 

@@ -33,10 +33,8 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 
     private IChatController controller;
     private ListView conversationList;
-    private EditText sendingMsg;
-    private Button sendButton;
-    private Button endConversationButton;
     private Button continueChat;
+    private TextView userIP;
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
     private IServerMediator mediator;
@@ -48,7 +46,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
         setContentView(R.layout.chat_activity_last_list);
         Log.d("chatActivity","onCreate");
         controller = new MyChatController();
-        mediator = (FirebaseMediator) App.getServerMediator();
+        mediator = App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
@@ -56,26 +54,8 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
 
         conversationList = (ListView) findViewById(R.id.conversation_list);
-        endConversationButton = (Button) findViewById(R.id.end_convrs_button);
         continueChat = (Button) findViewById(R.id.end_convrs_button);
-
-        sendingMsg = (EditText) findViewById(R.id.sending_msg);
-        sendButton = (Button) findViewById(R.id.send_button);
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //String date, String sendingName get from server(fireBase) or another place
-
-                ////
-//                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
-                //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
-                ////
-                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), App.getiModel().getAssistantName() , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
-                sendingMsg.setText("");
-
-            }
-        });
+        userIP = (TextView) findViewById(R.id.user_ip);
 
         adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getLastMessagesDB() )
         {
@@ -91,6 +71,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
                 msg.setText(message.getMsg());
                 date.setText(message.getDate());
                 senderName.setText(message.getSendingName());
+                userIP.setText(message.getIp());
             }
         };
 
