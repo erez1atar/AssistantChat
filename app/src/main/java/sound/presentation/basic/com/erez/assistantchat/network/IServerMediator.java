@@ -16,4 +16,6 @@ public interface IServerMediator
     {
         void onChatOpened();
     }
+
+    void login();
 }
