@@ -1,7 +1,6 @@
 package sound.presentation.basic.com.erez.assistantchat.chat_ui;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,11 +22,9 @@ import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.chat_controller.IChatController;
 import sound.presentation.basic.com.erez.assistantchat.chat_controller.MyChatController;
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
-import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
 import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
-import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 public class ChatActivity extends AppCompatActivity {
@@ -80,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
 //                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
                 //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
                 ////
-                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), App.getiModel().getAssistantName() , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
+                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), App.getModel().getAssistantName() , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
                 sendingMsg.setText("");
 
             }

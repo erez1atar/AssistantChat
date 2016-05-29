@@ -3,6 +3,7 @@ package sound.presentation.basic.com.erez.assistantchat.login_ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.connection_ui.ConnectionActivity;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
+import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
+import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,17 +22,34 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button button = (Button)findViewById(R.id.loginButton);
-        final EditText name = (EditText)findViewById(R.id.nameText);
+        final EditText password = (EditText) findViewById(R.id.password_button);
+        final EditText name = (EditText) findViewById(R.id.nameText);
+        Button button = (Button) findViewById(R.id.loginButton);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                App.getiModel().setAssistantName(name.getText().toString());
-                App.getServerMediator().login();
-                Intent intent = new Intent(LoginActivity.this, ConnectionActivity.class);
-                startActivity(intent);
+                IModel model = App.getModel();
+                model.setAssistantName(name.getText().toString());
+                model.setPassword(password.getText().toString());
+                App.getServerMediator().login(new IServerMediator.ILoginAuthenciation()
+                {
+                    @Override
+                    public void onLoginSuccess()
+                    {
+                        Intent intent = new Intent(LoginActivity.this, ConnectionActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLoginFailed()
+                    {
+                        Log.d("onClick", "Login failed!");
+                    }
+                });
             }
         });
+
     }
 }
