@@ -1,6 +1,7 @@
 package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
+import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivityLastMsg;
 import sound.presentation.basic.com.erez.assistantchat.login_ui.LoginActivity;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
@@ -27,7 +28,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
         /*Intent intent = new Intent(App.getInstance(), ChatActivityLastMsg.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getInstance().startActivity(intent);*/
-        ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
+        ActivityRouter.changeActivity(App.getInstance(), ChatActivityLastMsg.class);
     }
 
     @Override
