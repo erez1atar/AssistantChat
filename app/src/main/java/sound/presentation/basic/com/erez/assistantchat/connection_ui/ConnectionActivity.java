@@ -22,8 +22,8 @@ public class ConnectionActivity extends AppCompatActivity
 
         final ControllerConnection controller = new ControllerConnection();
 
-        App.getServerMediator().addActiveAssistant(App.getModel().getAssistantName());
-        App.getServerMediator().changeAvailableStatus(false);
+        controller.addToActiveAssistants();
+        controller.changeAvailableStatus(false);
 
         final Switch availableSwitch = (Switch)findViewById(R.id.availableSwitch);
         if (availableSwitch != null)
@@ -32,7 +32,7 @@ public class ConnectionActivity extends AppCompatActivity
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
-                    App.getServerMediator().changeAvailableStatus(isChecked);
+                    controller.changeAvailableStatus(isChecked);
                     if(isChecked)
                     {
                         App.getServerMediator().registerOpenSessionsListener(controller);
@@ -52,10 +52,7 @@ public class ConnectionActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    App.getServerMediator().removeActiveAssistant(App.getModel().getAssistantName());
-                    App.getServerMediator().changeAvailableStatus(false);
-                    Intent intent = new Intent(App.getInstance(), LoginActivity.class);
-                    startActivity(intent);
+                    controller.finishShift();
                 }
             });
         }
