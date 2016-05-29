@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.login_controller.MyLoginController;
@@ -12,7 +13,7 @@ import sound.presentation.basic.com.erez.assistantchat.login_controller.MyLoginC
 public class LoginActivity extends AppCompatActivity implements ILoginUI
 {
     private EditText password;
-    private EditText name;
+    private EditText email;
     private Button loginButton;
     private MyLoginController controller = new MyLoginController(this);
 
@@ -22,8 +23,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginUI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        email = (EditText) findViewById(R.id.emailText);
         password = (EditText) findViewById(R.id.passwordText);
-        name = (EditText) findViewById(R.id.nameText);
         loginButton = (Button) findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(new View.OnClickListener()
@@ -38,14 +39,20 @@ public class LoginActivity extends AppCompatActivity implements ILoginUI
     }
 
     @Override
-    public String getName()
+    public String getEmail()
     {
-        return name.getText().toString();
+        return email.getText().toString();
     }
 
     @Override
     public String getPassword()
     {
         return password.getText().toString();
+    }
+
+    @Override
+    public void invalidEmailOrPassword()
+    {
+        Toast.makeText(this, "Invalid Email or Password!", Toast.LENGTH_LONG).show();
     }
 }

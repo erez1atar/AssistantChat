@@ -1,10 +1,6 @@
 package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 
-import android.app.Activity;
-import android.content.Intent;
-
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
-import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivityLastMsg;
 import sound.presentation.basic.com.erez.assistantchat.login_ui.LoginActivity;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
@@ -43,13 +39,13 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     @Override
     public void addToActiveAssistants()
     {
-        serverMediator.addActiveAssistant(model.getAssistantName());
+        serverMediator.addActiveAssistant(model.getID());
     }
 
     @Override
     public void removeFromActiveAssistants()
     {
-        serverMediator.removeActiveAssistant(model.getAssistantName());
+        serverMediator.removeActiveAssistant(model.getID());
     }
 
     @Override

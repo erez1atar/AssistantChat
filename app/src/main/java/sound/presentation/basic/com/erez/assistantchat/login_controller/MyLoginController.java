@@ -29,22 +29,31 @@ public class MyLoginController
         if (ui != null)
         {
             IModel model = App.getModel();
-            model.setAssistantName(ui.getName());
-            model.setPassword(ui.getPassword());
-            App.getServerMediator().login(new IServerMediator.ILoginAuthenciation()
+            String email = ui.getEmail();
+            String password = ui.getPassword();
+            if (email != null && password != null)
             {
-                @Override
-                public void onLoginSuccess()
+                model.setEmail(email);
+                model.setPassword(password);
+                App.getServerMediator().login(new IServerMediator.ILoginAuthentication()
                 {
-                    ActivityRouter.changeActivity(App.getInstance(), ConnectionActivity.class);
-                }
+                    @Override
+                    public void onLoginSuccess()
+                    {
+                        ActivityRouter.changeActivity(App.getInstance(), ConnectionActivity.class);
+                    }
 
-                @Override
-                public void onLoginFailed()
-                {
-                    Log.d("onClick", "Login failed!");
-                }
-            });
+                    @Override
+                    public void onLoginFailed()
+                    {
+                        Log.d("login", "Login failed!");
+                    }
+                });
+            }
+            else
+            {
+                ui.invalidEmailOrPassword();
+            }
         }
     }
 }

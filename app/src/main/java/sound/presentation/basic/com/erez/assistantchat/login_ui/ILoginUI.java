@@ -5,7 +5,9 @@ package sound.presentation.basic.com.erez.assistantchat.login_ui;
  */
 public interface ILoginUI
 {
-    String getName();
+    String getEmail();
 
     String getPassword();
+
+    void invalidEmailOrPassword();
 }

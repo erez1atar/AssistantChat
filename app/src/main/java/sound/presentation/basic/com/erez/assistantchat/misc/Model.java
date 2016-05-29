@@ -5,12 +5,25 @@ package sound.presentation.basic.com.erez.assistantchat.misc;
  */
 public class Model implements IModel
 {
-    private String assistantName;
+    private String email;
     private String password;
+    private String id;
 
-    public void setAssistantName(String assistantName)
+    public void setEmail(String email)
     {
-        this.assistantName = assistantName;
+        this.email = email;
+    }
+
+    @Override
+    public void setID(String id)
+    {
+        this.id = id;
+    }
+
+    @Override
+    public String getID()
+    {
+        return id;
     }
 
     @Override
@@ -19,9 +32,9 @@ public class Model implements IModel
         this.password = password;
     }
 
-    public String getAssistantName()
+    public String getEmail()
     {
-        return assistantName;
+        return email;
     }
 
     @Override

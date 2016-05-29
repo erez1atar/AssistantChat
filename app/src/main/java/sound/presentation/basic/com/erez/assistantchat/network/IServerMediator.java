@@ -28,12 +28,12 @@ public interface IServerMediator
         void onChatOpened();
     }
 
-    interface ILoginAuthenciation
+    interface ILoginAuthentication
     {
         void onLoginSuccess();
 
         void onLoginFailed();
     }
 
-    void login(ILoginAuthenciation authenciation);
+    void login(ILoginAuthentication authentication);
 }

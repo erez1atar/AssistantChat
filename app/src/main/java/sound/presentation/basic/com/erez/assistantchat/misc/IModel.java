@@ -9,7 +9,11 @@ public interface IModel
 
     String getPassword();
 
-    String getAssistantName();
+    String getEmail();
 
-    void setAssistantName(String assistantName);
+    void setEmail(String email);
+
+    void setID(String id);
+
+    String getID();
 }

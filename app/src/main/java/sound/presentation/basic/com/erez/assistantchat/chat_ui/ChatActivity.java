@@ -77,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
 //                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
                 //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
                 ////
-                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), App.getModel().getAssistantName() , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
+                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), App.getModel().getID() , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
                 sendingMsg.setText("");
 
             }
