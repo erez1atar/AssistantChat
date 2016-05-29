@@ -83,7 +83,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
         continueChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityRouter.changeActivity(ChatActivityLastMsg.this, ChatActivity.class);
+                ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);//ChatActivityLastMsg.this
 //                finish();
             }
         });
