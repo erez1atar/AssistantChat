@@ -12,4 +12,5 @@ public interface IControllerConnection
     void removeFromActiveAssistants();
 
     void finishShift();
+
 }
