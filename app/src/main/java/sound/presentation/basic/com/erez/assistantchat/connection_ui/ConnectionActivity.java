@@ -23,6 +23,7 @@ public class ConnectionActivity extends AppCompatActivity
         final ControllerConnection controller = new ControllerConnection();
 
         App.getServerMediator().addActiveAssistant(App.getModel().getAssistantName());
+        App.getServerMediator().changeAvailableStatus(false);
 
         final Switch availableSwitch = (Switch)findViewById(R.id.availableSwitch);
         if (availableSwitch != null)
@@ -52,6 +53,7 @@ public class ConnectionActivity extends AppCompatActivity
                 public void onClick(View v)
                 {
                     App.getServerMediator().removeActiveAssistant(App.getModel().getAssistantName());
+                    App.getServerMediator().changeAvailableStatus(false);
                     Intent intent = new Intent(App.getInstance(), LoginActivity.class);
                     startActivity(intent);
                 }

@@ -12,7 +12,6 @@ import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
  */
 public class ControllerConnection implements IServerMediator.OpenSessionsListener
 {
-
     @Override
     public void onChatOpened()
     {
