@@ -20,7 +20,7 @@ public class ConnectionActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
 
-        final ControllerConnection controller = new ControllerConnection();
+        final IControllerConnection controller = new ControllerConnection();
 
         controller.addToActiveAssistants();
         controller.changeAvailableStatus(false);
@@ -33,14 +33,14 @@ public class ConnectionActivity extends AppCompatActivity
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     controller.changeAvailableStatus(isChecked);
-                    if(isChecked)
+                    /*if(isChecked)
                     {
                         App.getServerMediator().registerOpenSessionsListener(controller);
                     }
                     else
                     {
                         App.getServerMediator().clearOpenSessionsListener();
-                    }
+                    }*/
                 }
 
             });

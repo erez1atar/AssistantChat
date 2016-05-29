@@ -34,6 +34,14 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     public void changeAvailableStatus(boolean isAvailable)
     {
         serverMediator.changeAvailableStatus(isAvailable);
+        if(isAvailable)
+        {
+            serverMediator.registerOpenSessionsListener(this);
+        }
+        else
+        {
+            serverMediator.clearOpenSessionsListener();
+        }
     }
 
     @Override
