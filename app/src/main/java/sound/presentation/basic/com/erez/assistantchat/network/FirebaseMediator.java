@@ -12,6 +12,7 @@ import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
+import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
 
 /**
  * Get access to server methods utilizing firebase as a server-side.
@@ -25,6 +26,7 @@ public class FirebaseMediator implements IServerMediator
     private static final String AVAILABLE_ASSISTANT_FLAG_CHILD = "available";
     private static final String MESSAGES_CHILD = "chat";
     private static final String LAST_MESSAGES_CHILD = "last_messages";
+    private static final String PASSWORD_CHILD = "password";
 
     private static final String TAG = "FirebaseMediator";
 
@@ -47,48 +49,49 @@ public class FirebaseMediator implements IServerMediator
     @Override
     public void changeAvailableStatus(boolean available)
     {
-        fb.child(ASSISTANTS_DETAILS_CHILD).child(App.getiModel().getAssistantName()).child(AVAILABLE_ASSISTANT_FLAG_CHILD).setValue(available);
+        fb.child(ASSISTANTS_DETAILS_CHILD).child(App.getModel().getAssistantName()).child(AVAILABLE_ASSISTANT_FLAG_CHILD).setValue(available);
     }
 
     @Override
-    public void login()
+    public void login(final ILoginAuthenciation authenciation)
     {
-//        Map<String, Object> payload = new HashMap<>();
-//        payload.put("uid", UUID.randomUUID().toString());
-//        payload.put("password", "42");
-//
-//        TokenOptions options = new TokenOptions();
-//        options.setAdmin(true);
-//
-//        TokenGenerator tokenizer = new TokenGenerator(App.getInstance().getString(R.string.firebase_secret));
-//        String token = tokenizer.createToken(payload, options);
-//        fb.authWithCustomToken(token, new Firebase.AuthResultHandler()
-//        {
-//            @Override
-//            public void onAuthenticated(AuthData authData)
-//            {
-//                Log.d(TAG + "_login", "authentication successful!");
-//            }
-//
-//            @Override
-//            public void onAuthenticationError(FirebaseError firebaseError)
-//            {
-//                Log.e(TAG + "_login", firebaseError.getMessage());
-//            }
-//        });
         fb.authWithPassword(admin_email, admin_password, new Firebase.AuthResultHandler()
         {
             @Override
             public void onAuthenticated(AuthData authData)
             {
-                Log.d(TAG + "_login", "authentication successful!");
-                Log.d(TAG + "_login", "UID is " + authData.getUid());
+//                Log.d(TAG + "_login", "authentication successful!");
+//                Log.d(TAG + "_login", "UID is " + authData.getUid());
+                final IModel model = App.getModel();
+                fb.child(ASSISTANTS_DETAILS_CHILD).child(model.getAssistantName()).child(PASSWORD_CHILD).addListenerForSingleValueEvent(new ValueEventListener()
+                {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot)
+                    {
+                        String existingPassword = dataSnapshot.getValue(String.class);
+                        if (existingPassword != null && existingPassword.equals(model.getPassword()))
+                        {
+                            authenciation.onLoginSuccess();
+                        }
+                        else
+                        {
+                            authenciation.onLoginFailed();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError)
+                    {
+                        Log.e(TAG, firebaseError.getMessage());
+                        authenciation.onLoginFailed();
+                    }
+                });
             }
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError)
             {
-                Log.e(TAG + "_login", firebaseError.getMessage());
+//                Log.e(TAG + "_login", firebaseError.getMessage());
             }
         });
     }
@@ -101,7 +104,7 @@ public class FirebaseMediator implements IServerMediator
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                if(dataSnapshot.hasChild(App.getiModel().getAssistantName()))
+                if(dataSnapshot.hasChild(App.getModel().getAssistantName()))
                 {
                     openSessionsListener.onChatOpened();
                 }
@@ -135,35 +138,34 @@ public class FirebaseMediator implements IServerMediator
         fb.child(ACTIVE_ASSISTANTS_CHILD).child(assistantName).removeValue();
     }
 
-
     public void setListener(ValueEventListener listener) {
         this.listener = listener;
     }
 
     public void endConversation() {
         Log.d("Debug", "FirebaseMediator::endConversation");
-        fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(CONNECTED).setValue(false);
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getAssistantName()).child(CONNECTED).setValue(false);
     }
 
     public Firebase getMessagesDB()
     {
-        return fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(MESSAGES_CHILD);
+        return fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getAssistantName()).child(MESSAGES_CHILD);
     }
 
     public Firebase getLastMessagesDB()
     {
-        return fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(LAST_MESSAGES_CHILD);
+        return fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getAssistantName()).child(LAST_MESSAGES_CHILD);
     }
 
     public void executeListeningConnected() {
-        fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(CONNECTED).addValueEventListener(listener);
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getAssistantName()).child(CONNECTED).addValueEventListener(listener);
         //.addListenerForSingleValueEvent(listener);//child(CONNECTED).
     }
 
     public void sendMessage(IMessage message)
     {
         //fb.child(MESSAGES_CHILD).push().setValue(message);
-        fb.child(OPENED_SESSIONS_CHILD).child(App.getiModel().getAssistantName()).child(MESSAGES_CHILD).push().setValue(message);
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getAssistantName()).child(MESSAGES_CHILD).push().setValue(message);
     }
 
 }

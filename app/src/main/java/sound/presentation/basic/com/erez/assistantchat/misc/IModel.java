@@ -1,10 +1,14 @@
 package sound.presentation.basic.com.erez.assistantchat.misc;
 
 /**
- * Created by LENOVO on 22/05/2016.
+ * Interface for model to save connection data across the app components.
  */
 public interface IModel
 {
+    void setPassword(String password);
+
+    String getPassword();
+
     String getAssistantName();
 
     void setAssistantName(String assistantName);
