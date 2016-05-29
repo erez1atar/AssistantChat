@@ -62,7 +62,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     {
         removeFromActiveAssistants();
         changeAvailableStatus(false);
-        ActivityRouter.changeActivity(App.getInstance(), LoginActivity.class);
+//        ActivityRouter.changeActivity(App.getInstance(), LoginActivity.class);
     }
 
 

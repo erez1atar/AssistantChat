@@ -53,6 +53,7 @@ public class ConnectionActivity extends AppCompatActivity
                 public void onClick(View v)
                 {
                     controller.finishShift();
+                    finish();
                 }
             });
         }
