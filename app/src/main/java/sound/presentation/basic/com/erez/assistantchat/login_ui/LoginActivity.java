@@ -1,21 +1,20 @@
 package sound.presentation.basic.com.erez.assistantchat.login_ui;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
-import sound.presentation.basic.com.erez.assistantchat.connection_ui.ConnectionActivity;
-import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
-import sound.presentation.basic.com.erez.assistantchat.misc.App;
-import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
-import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
+import sound.presentation.basic.com.erez.assistantchat.login_controller.MyLoginController;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements ILoginUI
+{
+    private EditText password;
+    private EditText name;
+    private Button loginButton;
+    private MyLoginController controller = new MyLoginController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,33 +22,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText password = (EditText) findViewById(R.id.password_button);
-        final EditText name = (EditText) findViewById(R.id.nameText);
-        Button button = (Button) findViewById(R.id.loginButton);
+        password = (EditText) findViewById(R.id.passwordText);
+        name = (EditText) findViewById(R.id.nameText);
+        loginButton = (Button) findViewById(R.id.loginButton);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
-                IModel model = App.getModel();
-                model.setAssistantName(name.getText().toString());
-                model.setPassword(password.getText().toString());
-                App.getServerMediator().login(new IServerMediator.ILoginAuthenciation()
-                {
-                    @Override
-                    public void onLoginSuccess()
-                    {
-                        ActivityRouter.changeActivity(LoginActivity.this, ConnectionActivity.class);
-                    }
-
-                    @Override
-                    public void onLoginFailed()
-                    {
-                        Log.d("onClick", "Login failed!");
-                    }
-                });
+                controller.login();
             }
         });
 
+    }
+
+    @Override
+    public String getName()
+    {
+        return name.getText().toString();
+    }
+
+    @Override
+    public String getPassword()
+    {
+        return password.getText().toString();
     }
 }
