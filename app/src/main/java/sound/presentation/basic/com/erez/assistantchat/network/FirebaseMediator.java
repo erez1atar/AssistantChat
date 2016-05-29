@@ -99,8 +99,11 @@ public class FirebaseMediator implements IServerMediator
     @Override
     public void clearOpenSessionsListener()
     {
-        openSessionsListener = null;
-        fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
+        if(openSessionsListener != null)
+        {
+            openSessionsListener = null;
+            fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
+        }
     }
 
     @Override
