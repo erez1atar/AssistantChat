@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.connection_ui.ConnectionActivity;
+import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
@@ -38,8 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onLoginSuccess()
                     {
-                        Intent intent = new Intent(LoginActivity.this, ConnectionActivity.class);
-                        startActivity(intent);
+                        ActivityRouter.changeActivity(LoginActivity.this, ConnectionActivity.class);
                     }
 
                     @Override
