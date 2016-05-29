@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginUI
                 controller.login();
             }
         });
-
     }
 
     @Override
