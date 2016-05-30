@@ -6,11 +6,11 @@ import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 /**
- * Created by LENOVO on 22/05/2016.
+ * Application class for accessing persistent components.
  */
 public class App extends Application
 {
-    private static IModel iModel;
+    private static IModel model;
     private static IServerMediator serverMediator;
     private static App Instance;
 
@@ -19,13 +19,13 @@ public class App extends Application
         Instance = this;
     }
 
-    public static IModel getiModel()
+    public static IModel getModel()
     {
-        if(iModel == null)
+        if(model == null)
         {
-            iModel = new Model();
+            model = new Model();
         }
-        return iModel;
+        return model;
     }
 
     public static App getInstance()

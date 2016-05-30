@@ -44,7 +44,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity_last_list);
-        Log.d("chatActivity","onCreate");
+        Log.d("chatActivityLastMsg","onCreate");
         controller = new MyChatController();
         mediator = App.getServerMediator();
         controller.setServerMediator(mediator);
@@ -83,6 +83,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
         continueChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Debug", "ActivityRouter.changeActivity:continueChat");
                 ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);//ChatActivityLastMsg.this
 //                finish();
             }
@@ -142,7 +143,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
     @Override
     protected void onStop()
     {
-        mediator.endConversation();
+       // mediator.endConversation();
         super.onStop();
     }
 

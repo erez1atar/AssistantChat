@@ -6,7 +6,7 @@ import com.firebase.client.ValueEventListener;
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 
 /**
- * Created by LENOVO on 22/05/2016.
+ * Interface for the various methods required to connect with the server.
  */
 public interface IServerMediator
 {
@@ -23,10 +23,17 @@ public interface IServerMediator
     void addActiveAssistant(String assistantName);
     void removeActiveAssistant(String assistantName);
 
-    public interface OpenSessionsListener
+    interface OpenSessionsListener
     {
         void onChatOpened();
     }
 
-    void login();
+    interface ILoginAuthentication
+    {
+        void onLoginSuccess();
+
+        void onLoginFailed();
+    }
+
+    void login(ILoginAuthentication authentication);
 }

@@ -54,19 +54,8 @@ public class MyChatController implements IChatController, ValueEventListener {
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         Log.d("Debug", "enter onDataChange");
-//        if( dataSnapshot.hasChild( FirebaseMediator.CONNECTED ) ) //serverMediator.getActiveAssistant()
-//        {
-//            Log.d("Debug", "enter if onDataChange");
-//            fb.child(USERS_CHILD).child(String.valueOf(App.getServerMediator().getToken())).child(assistant.getName()).setValue(new ChatMessage("Chat started", "1.1.2016", assistant.getName(), "should be ip"));
             if (! dataSnapshot.getValue(Boolean.class) ) {
                 Log.d("Debug", "onDataChange false");
-//store last 10 entries
-//Persistance persistance = new Persistance();
-//
-//List<IMessage> arrayLastMsgs = latestMessages.getSavedMessages();
-//
-//persistance.saveLastMessages( arrayLastMsgs );
-
             }
             Log.d("Debug", "onDataChange");
 //        }
