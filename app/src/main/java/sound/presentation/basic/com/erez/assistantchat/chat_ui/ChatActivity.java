@@ -15,9 +15,6 @@ import com.firebase.ui.FirebaseListAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -57,7 +54,6 @@ public class ChatActivity extends AppCompatActivity {
         mediator.executeListeningConnected();
 
         Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " " + App.getModel().getUserData().getAvatar());
-
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
         conversationList = (ListView) findViewById(R.id.conversation_list);
