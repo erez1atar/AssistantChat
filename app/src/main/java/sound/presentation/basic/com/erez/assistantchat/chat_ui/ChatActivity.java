@@ -46,10 +46,10 @@ public class ChatActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity_list);
+
         Log.d("chatActivity","onCreate");
-        controller = new MyChatController();
         mediator = (FirebaseMediator) App.getServerMediator();
-        controller.setServerMediator(mediator);
+        controller = new MyChatController(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
 

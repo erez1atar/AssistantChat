@@ -6,15 +6,14 @@ import android.util.Log;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 /**
  * Created by user on 03/05/2016.
  */
-public class MyChatController implements IChatController, ValueEventListener {
-
+public class MyChatController implements IChatController, ValueEventListener
+{
 //    private WeakReference<IPresentChat> iWRPresent;
     private IServerMediator serverMediator;
 //    private SavingLastMessage latestMessages = new SavingLastMessage(10);
@@ -23,6 +22,12 @@ public class MyChatController implements IChatController, ValueEventListener {
 //    public List<IMessage> getMessageFromServer() { //add parameters
 //        return serverMediator.getMessageHistory();
 //    }
+
+
+    public MyChatController(IServerMediator serverMediator)
+    {
+        this.serverMediator = serverMediator;
+    }
 
     @Override
     public void sendToServer(IMessage msg) {
@@ -48,23 +53,20 @@ public class MyChatController implements IChatController, ValueEventListener {
 //        }
 //    }
 
-    public void setServerMediator(IServerMediator serverMediator) {
-        this.serverMediator = serverMediator;
-    }
-
     @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
+    public void onDataChange(DataSnapshot dataSnapshot)
+    {
         Log.d("Debug", "AssisChat:enter onDataChange");
-            if (! dataSnapshot.getValue(Boolean.class) ) {
-                Log.d("Debug", "AssisChat:onDataChange false");
-            }
-            Log.d("Debug", "AssisChat:onDataChange");
-//        }
+        if (! dataSnapshot.getValue(Boolean.class) )
+        {
+            Log.d("Debug", "AssisChat:onDataChange false");
+        }
     }
 
     @Override
-    public void onCancelled(FirebaseError firebaseError) {
-
+    public void onCancelled(FirebaseError firebaseError)
+    {
+        Log.e("onCancelled", firebaseError.getMessage());
     }
 
 }

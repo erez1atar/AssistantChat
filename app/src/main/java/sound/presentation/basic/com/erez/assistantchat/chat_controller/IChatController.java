@@ -14,7 +14,6 @@ public interface IChatController
     void sendToServer(IMessage msg);
 
     //void sendToServer(ChatMessage chatMessage);
-    void setServerMediator(IServerMediator serverMediator);
 //    void displayMessage(String msg);
 //    void saveLastMessage(IMessage iMessage);
 
