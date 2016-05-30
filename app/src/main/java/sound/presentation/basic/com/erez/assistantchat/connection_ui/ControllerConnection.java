@@ -31,6 +31,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
         /*Intent intent = new Intent(App.getInstance(), ChatActivityLastMsg.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getInstance().startActivity(intent);*/
+        App.getServerMediator().clearOpenSessionsListener();
         ActivityRouter.changeActivity(App.getInstance(), ChatActivityLastMsg.class);
     }
 
