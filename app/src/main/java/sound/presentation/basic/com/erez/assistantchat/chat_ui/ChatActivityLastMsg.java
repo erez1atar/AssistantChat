@@ -24,7 +24,7 @@ import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
-import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
+import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 
 public class ChatActivityLastMsg extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 //    private TextView userIP;
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
-    private IServerMediator mediator;
+    private FirebaseMediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,7 +44,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 
         Log.d("chatActivityLastMsg","onCreate");
         controller = new MyChatController();
-        mediator = App.getServerMediator();
+        mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
