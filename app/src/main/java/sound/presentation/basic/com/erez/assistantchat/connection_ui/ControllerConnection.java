@@ -28,9 +28,6 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     {
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
         App.getServerMediator().changeAvailableStatus(false);
-        /*Intent intent = new Intent(App.getInstance(), ChatActivityLastMsg.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        App.getInstance().startActivity(intent);*/
         App.getServerMediator().clearOpenSessionsListener();
         ActivityRouter.changeActivity(App.getInstance(), ChatActivityLastMsg.class);
     }
