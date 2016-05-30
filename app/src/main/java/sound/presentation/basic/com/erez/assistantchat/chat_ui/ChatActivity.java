@@ -46,13 +46,14 @@ public class ChatActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity_list);
-        Log.d("chatActivity","onCreate");
+        Log.d("chatActivity", "onCreate");
         controller = new MyChatController();
         mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
-        Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " "  + App.getModel().getUserData().getAvatar());
+
+        Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " " + App.getModel().getUserData().getAvatar());
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
         conversationList = (ListView) findViewById(R.id.conversation_list);

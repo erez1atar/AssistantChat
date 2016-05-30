@@ -85,6 +85,8 @@ public class FirebaseMediator implements IServerMediator
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {
                     Log.d("Mediator-updateUserData", "onDataChange");
+                    MyUserData myUserData = dataSnapshot.getValue(MyUserData.class);
+                    //Log.d("Mediator - updateUserData", "userData = " + myUserData.getAvatar() + " " + myUserData.getName());
                     App.getModel().setUserData(dataSnapshot.getValue(MyUserData.class));
                 }
 
