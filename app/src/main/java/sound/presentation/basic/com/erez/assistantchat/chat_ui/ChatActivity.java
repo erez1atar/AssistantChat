@@ -16,6 +16,9 @@ import com.firebase.ui.FirebaseListAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -148,7 +151,6 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessage(String msg, String date, String sendingName, String ip)
     {
         ChatMessage chatMessage = (ChatMessage) Factory.createMessage(msg, date, sendingName, ip);
-
         controller.sendToServer(chatMessage);
     }
 
