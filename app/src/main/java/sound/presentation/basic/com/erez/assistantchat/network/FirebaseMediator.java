@@ -93,7 +93,7 @@ public class FirebaseMediator implements IServerMediator
 
             }
         };
-        fb.child(OPENED_SESSIONS_CHILD).addValueEventListener(valueEventListener);
+        fb.child(OPENED_SESSIONS_CHILD).addListenerForSingleValueEvent(valueEventListener);
     }
 
     @Override
