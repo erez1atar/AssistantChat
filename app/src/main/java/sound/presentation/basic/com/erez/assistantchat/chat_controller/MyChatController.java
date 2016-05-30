@@ -53,11 +53,11 @@ public class MyChatController implements IChatController, ValueEventListener {
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        Log.d("Debug", "enter onDataChange");
+        Log.d("Debug", "AssisChat:enter onDataChange");
             if (! dataSnapshot.getValue(Boolean.class) ) {
-                Log.d("Debug", "onDataChange false");
+                Log.d("Debug", "AssisChat:onDataChange false");
             }
-            Log.d("Debug", "onDataChange");
+            Log.d("Debug", "AssisChat:onDataChange");
 //        }
     }
 
