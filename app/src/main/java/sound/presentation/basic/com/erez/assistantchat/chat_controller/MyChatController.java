@@ -7,6 +7,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
+import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 /**
@@ -24,7 +25,7 @@ public class MyChatController implements IChatController, ValueEventListener {
 //    }
 
     @Override
-    public void sendToServer(ChatMessage msg) {
+    public void sendToServer(IMessage msg) {
         serverMediator.sendMessage(msg);
     }
 
