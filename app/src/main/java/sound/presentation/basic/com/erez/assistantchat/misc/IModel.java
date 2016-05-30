@@ -1,5 +1,7 @@
 package sound.presentation.basic.com.erez.assistantchat.misc;
 
+import sound.presentation.basic.com.erez.assistantchat.user.IUserData;
+
 /**
  * Interface for model to save connection data across the app components.
  */
@@ -16,4 +18,8 @@ public interface IModel
     void setID(String id);
 
     String getID();
+
+    IUserData getUserData();
+
+    void setUserData(IUserData iUserData);
 }
