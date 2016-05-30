@@ -22,6 +22,7 @@ public interface IServerMediator
     void clearOpenSessionsListener();
     void addActiveAssistant(String assistantName);
     void removeActiveAssistant(String assistantName);
+    String getAssistantName();
 
     interface OpenSessionsListener
     {

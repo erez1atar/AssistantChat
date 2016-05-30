@@ -18,6 +18,8 @@ import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
  */
 public class FirebaseMediator implements IServerMediator
 {
+    String assisName;
+
     private static final String FIREBASE_ADDRESS = "https://incandescent-inferno-5809.firebaseio.com";
     private static final String ACTIVE_ASSISTANTS_CHILD = "active_assistants";
     private static final String ASSISTANTS_DETAILS_CHILD = "assistants";
@@ -25,7 +27,7 @@ public class FirebaseMediator implements IServerMediator
     private static final String AVAILABLE_ASSISTANT_FLAG_CHILD = "available";
     private static final String MESSAGES_CHILD = "chat";
     private static final String LAST_MESSAGES_CHILD = "last_messages";
-
+    private static final String ASSISTANT_NAME_CHILD = "name";
     private static final String TAG = "FirebaseMediator";
 
     public static final String CONNECTED = "connected";
@@ -144,5 +146,29 @@ public class FirebaseMediator implements IServerMediator
     {
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(MESSAGES_CHILD).push().setValue(message);
     }
+
+    public String getAssistantName() {
+
+        Log.d("Debug", "getAssistantName:ID:  " + App.getModel().getID() + '\n');
+        Firebase asistNameFireBase = fb.child(ASSISTANTS_DETAILS_CHILD).child(App.getModel().getID()).child(ASSISTANT_NAME_CHILD);
+        asistNameFireBase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                assisName = snapshot.getValue(String.class);
+                Log.d("Debug", "getAssistantName:onDataChange:name:  " + assisName + '\n');
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d("Debug", "getAssistantName:name:  " + assisName + '\n');
+        return assisName;
+    }
+
 
 }

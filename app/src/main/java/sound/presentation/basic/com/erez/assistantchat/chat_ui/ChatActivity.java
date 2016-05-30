@@ -56,6 +56,7 @@ public class ChatActivity extends AppCompatActivity {
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
 
+
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
         conversationList = (ListView) findViewById(R.id.conversation_list);
         endConversationButton = (Button) findViewById(R.id.end_convrs_button);
@@ -72,6 +73,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        final String assistantName = mediator.getAssistantName();
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
 //                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
                 //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
                 ////
-                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), App.getModel().getID() , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
+                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), assistantName , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
                 sendingMsg.setText("");
 
             }
