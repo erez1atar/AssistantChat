@@ -37,8 +37,6 @@ public class FirebaseMediator implements IServerMediator
     private ValueEventListener listener;
     private OpenSessionsListener openSessionsListener;
     private ValueEventListener valueEventListener;
-//    private String admin_email = App.getInstance().getResources().getString(R.string.firebase_admin_email);
-//    private String admin_password = App.getInstance().getResources().getString(R.string.firebase_admin_password);
 
     public FirebaseMediator()
     {
@@ -170,7 +168,6 @@ public class FirebaseMediator implements IServerMediator
 
     public void sendMessage(IMessage message)
     {
-        //fb.child(MESSAGES_CHILD).push().setValue(message);
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(MESSAGES_CHILD).push().setValue(message);
     }
 

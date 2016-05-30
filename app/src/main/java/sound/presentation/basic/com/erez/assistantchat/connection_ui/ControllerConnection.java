@@ -2,9 +2,7 @@ package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 
 import android.util.Log;
 
-import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivityLastMsg;
-import sound.presentation.basic.com.erez.assistantchat.login_ui.LoginActivity;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
@@ -65,7 +63,6 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     {
         removeFromActiveAssistants();
         changeAvailableStatus(false);
-//        ActivityRouter.changeActivity(App.getInstance(), LoginActivity.class);
     }
 
 

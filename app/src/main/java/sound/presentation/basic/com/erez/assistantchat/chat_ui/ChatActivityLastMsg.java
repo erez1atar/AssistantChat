@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,9 +24,7 @@ import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
-import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
 import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
-import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 public class ChatActivityLastMsg extends AppCompatActivity {
 
@@ -37,16 +34,17 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 //    private TextView userIP;
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
-    private IServerMediator mediator;
+    private FirebaseMediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity_last_list);
+
         Log.d("chatActivityLastMsg","onCreate");
         controller = new MyChatController();
-        mediator = App.getServerMediator();
+        mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();

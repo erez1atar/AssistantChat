@@ -15,9 +15,6 @@ import com.firebase.ui.FirebaseListAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -25,10 +22,11 @@ import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.chat_controller.IChatController;
 import sound.presentation.basic.com.erez.assistantchat.chat_controller.MyChatController;
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
+import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
 import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
-import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
+import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -41,7 +39,7 @@ public class ChatActivity extends AppCompatActivity {
 
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
-    private IServerMediator mediator;
+    private FirebaseMediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,7 +48,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.chat_activity_list);
         Log.d("chatActivity","onCreate");
         controller = new MyChatController();
-        mediator = App.getServerMediator();
+        mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
@@ -147,7 +145,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage(String msg, String date, String sendingName, String ip)
     {
-        ChatMessage chatMessage = (ChatMessage) Factory.createMessage(msg, date, sendingName, ip);
+        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, ip);
         controller.sendToServer(chatMessage);
     }
 
