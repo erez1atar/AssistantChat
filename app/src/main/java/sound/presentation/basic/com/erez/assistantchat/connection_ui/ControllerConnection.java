@@ -1,5 +1,7 @@
 package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 
+import android.util.Log;
+
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivityLastMsg;
 import sound.presentation.basic.com.erez.assistantchat.login_ui.LoginActivity;
@@ -24,6 +26,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     @Override
     public void onChatOpened()
     {
+        Log.d("onChatOpened", "Now transitioning to the last messages activity");
         App.getServerMediator().changeAvailableStatus(false);
         /*Intent intent = new Intent(App.getInstance(), ChatActivityLastMsg.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -34,6 +37,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     @Override
     public void changeAvailableStatus(boolean isAvailable)
     {
+        Log.d("changeAvailableStatus", "Available = " + isAvailable);
         serverMediator.changeAvailableStatus(isAvailable);
         if(isAvailable)
         {
