@@ -4,6 +4,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
 
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
+import sound.presentation.basic.com.erez.assistantchat.user.IUserData;
 
 /**
  * Interface for the various methods required to connect with the server.
@@ -36,4 +37,6 @@ public interface IServerMediator
     }
 
     void login(ILoginAuthentication authentication);
+
+    public void updateUserData();
 }
