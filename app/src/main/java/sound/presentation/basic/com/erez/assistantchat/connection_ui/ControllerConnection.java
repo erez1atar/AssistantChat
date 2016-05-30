@@ -11,7 +11,7 @@ import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 /**
- * Created by LENOVO on 22/05/2016.
+ * Controller for handling background connection from server before transitioning to the chat activities.
  */
 public class ControllerConnection implements IServerMediator.OpenSessionsListener, IControllerConnection
 {
@@ -27,8 +27,9 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     public void onChatOpened()
     {
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
-        App.getServerMediator().changeAvailableStatus(false);
-        App.getServerMediator().clearOpenSessionsListener();
+//        App.getServerMediator().changeAvailableStatus(false);
+//        App.getServerMediator().clearOpenSessionsListener();
+        changeAvailableStatus(false);
         ActivityRouter.changeActivity(App.getInstance(), ChatActivityLastMsg.class);
     }
 
