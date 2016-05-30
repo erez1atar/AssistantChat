@@ -25,6 +25,7 @@ import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.chat_controller.IChatController;
 import sound.presentation.basic.com.erez.assistantchat.chat_controller.MyChatController;
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
+import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
 import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
@@ -147,7 +148,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage(String msg, String date, String sendingName, String ip)
     {
-        ChatMessage chatMessage = (ChatMessage) Factory.createMessage(msg, date, sendingName, ip);
+        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, ip);
         controller.sendToServer(chatMessage);
     }
 

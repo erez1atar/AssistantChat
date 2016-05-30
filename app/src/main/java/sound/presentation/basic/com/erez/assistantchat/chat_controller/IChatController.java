@@ -2,6 +2,7 @@ package sound.presentation.basic.com.erez.assistantchat.chat_controller;
 
 
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
+import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 /**
@@ -10,7 +11,7 @@ import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 public interface IChatController
 {
 //    List<IMessage> getMessageFromServer();
-    void sendToServer(ChatMessage msg);
+    void sendToServer(IMessage msg);
 
     //void sendToServer(ChatMessage chatMessage);
     void setServerMediator(IServerMediator serverMediator);
