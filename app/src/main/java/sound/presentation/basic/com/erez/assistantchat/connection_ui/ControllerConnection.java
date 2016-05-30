@@ -27,6 +27,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
 //        App.getServerMediator().changeAvailableStatus(false);
 //        App.getServerMediator().clearOpenSessionsListener();
+        updateUserData();
         changeAvailableStatus(false);
         ActivityRouter.changeActivity(App.getInstance(), ChatActivityLastMsg.class);
     }
@@ -63,6 +64,12 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     {
         removeFromActiveAssistants();
         changeAvailableStatus(false);
+    }
+
+    @Override
+    public void updateUserData()
+    {
+        App.getServerMediator().updateUserData();
     }
 
 

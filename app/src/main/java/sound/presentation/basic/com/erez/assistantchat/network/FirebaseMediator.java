@@ -84,13 +84,14 @@ public class FirebaseMediator implements IServerMediator
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {
+                    Log.d("Mediator-updateUserData", "onDataChange");
                     App.getModel().setUserData(dataSnapshot.getValue(MyUserData.class));
                 }
 
                 @Override
                 public void onCancelled(FirebaseError firebaseError)
                 {
-
+                    Log.e("updateUserData", firebaseError.getMessage());
                 }
             });
         }
