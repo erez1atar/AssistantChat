@@ -2,6 +2,7 @@ package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 
 import android.util.Log;
 
+import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivityLastMsg;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
@@ -28,7 +29,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
 //        App.getServerMediator().changeAvailableStatus(false);
 //        App.getServerMediator().clearOpenSessionsListener();
         changeAvailableStatus(false);
-        ActivityRouter.changeActivity(App.getInstance(), ChatActivityLastMsg.class);
+        ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
     }
 
     @Override
