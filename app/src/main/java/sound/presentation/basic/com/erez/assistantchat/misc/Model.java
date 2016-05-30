@@ -1,5 +1,7 @@
 package sound.presentation.basic.com.erez.assistantchat.misc;
 
+import sound.presentation.basic.com.erez.assistantchat.user.IUserData;
+
 /**
  * Model used for saving data on memory.
  */
@@ -8,6 +10,7 @@ public class Model implements IModel
     private String email;
     private String password;
     private String id;
+    private IUserData userData;
 
     public void setEmail(String email)
     {
@@ -27,6 +30,18 @@ public class Model implements IModel
     }
 
     @Override
+    public IUserData getUserData()
+    {
+        return userData;
+    }
+
+    @Override
+    public void setUserData(IUserData iUserData)
+    {
+        this.userData = iUserData;
+    }
+
+    @Override
     public void setPassword(String password)
     {
         this.password = password;
@@ -42,4 +57,7 @@ public class Model implements IModel
     {
         return password;
     }
+
+
+
 }

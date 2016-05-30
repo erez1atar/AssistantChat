@@ -13,4 +13,6 @@ public interface IControllerConnection
 
     void finishShift();
 
+    void updateUserData();
+
 }

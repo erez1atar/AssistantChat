@@ -29,7 +29,7 @@ import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
 import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
-import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
+import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -42,19 +42,21 @@ public class ChatActivity extends AppCompatActivity {
 
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
-    private IServerMediator mediator;
+    private FirebaseMediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity_list);
-        Log.d("chatActivity","onCreate");
+        Log.d("chatActivity", "onCreate");
         controller = new MyChatController();
-        mediator = App.getServerMediator();
+        mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
+
+        Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " " + App.getModel().getUserData().getAvatar());
 
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
