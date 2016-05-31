@@ -16,6 +16,11 @@ public interface IServerMediator
         void onChatOpened();
     }
 
+    interface DataListener
+    {
+        void onDetailsUpdated();
+    }
+
     interface ILoginAuthentication
     {
         void onLoginSuccess();
@@ -38,6 +43,8 @@ public interface IServerMediator
 
     void registerOpenSessionsListener(OpenSessionsListener listener);
     void clearOpenSessionsListener();
+    void registerDataDetailsListener(DataListener dataListener);
+    void unregisterDataDetailsListener(DataListener dataListener);
     void addActiveAssistant(String assistantName);
     void removeActiveAssistant(String assistantName);
     void updateAssistantName();
@@ -45,5 +52,6 @@ public interface IServerMediator
 
     void login(ILoginAuthentication authentication);
 
-    void updateUserData();
+
+    public void updateUserData();
 }

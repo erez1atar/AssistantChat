@@ -11,6 +11,7 @@ import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 /**
  * Controller for handling background connection from server before transitioning to the chat activities.
  */
+public class ControllerConnection implements IServerMediator.OpenSessionsListener, IControllerConnection, IServerMediator.DataListener
 public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection
 {
     private IServerMediator serverMediator;
@@ -29,7 +30,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
 //        App.getServerMediator().changeAvailableStatus(false);
 //        App.getServerMediator().clearOpenSessionsListener();
-        updateUserData();
+        App.getServerMediator().registerDataDetailsListener(this);
         changeAvailableStatus(false);
 
         serverMediator.updateAssistantName();
@@ -82,4 +83,12 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     }
 
 
+    @Override
+    public void onDetailsUpdated()
+    {
+        App.getServerMediator().changeAvailableStatus(false);
+        App.getServerMediator().clearOpenSessionsListener();
+        App.getServerMediator().unregisterDataDetailsListener(this);
+        ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
+    }
 }
