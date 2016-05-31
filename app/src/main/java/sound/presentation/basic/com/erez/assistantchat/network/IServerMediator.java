@@ -28,6 +28,13 @@ public interface IServerMediator
         void onLoginFailed();
     }
 
+
+    interface IUpdateDataAssistantListener
+    {
+        void onUpdatedData();
+    }
+
+    void setUpdateDataAssistantListener(IUpdateDataAssistantListener updateDataAssistantListener);
     void changeAvailableStatus(boolean available);
     void endConversation();
     void sendMessage(IMessage message);
@@ -40,6 +47,7 @@ public interface IServerMediator
     void unregisterDataDetailsListener(DataListener dataListener);
     void addActiveAssistant(String assistantName);
     void removeActiveAssistant(String assistantName);
+    void updateAssistantName();
     String getAssistantName();
 
     void login(ILoginAuthentication authentication);
