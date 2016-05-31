@@ -40,12 +40,18 @@ public class FirebaseMediator implements IServerMediator
     private ValueEventListener listener;
     private OpenSessionsListener openSessionsListener;
     private ValueEventListener valueEventListener;
+    private IUpdateDataAssistantListener updateDataAssistantListener;
 
     public FirebaseMediator()
     {
         Firebase.setAndroidContext(App.getInstance());
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
         fb = new Firebase(FIREBASE_ADDRESS);
+    }
+
+    @Override
+    public void setUpdateDataAssistantListener(IUpdateDataAssistantListener updateDataAssistantListener) {
+        this.updateDataAssistantListener = updateDataAssistantListener;
     }
 
     @Override
@@ -178,7 +184,7 @@ public class FirebaseMediator implements IServerMediator
     }
 
 
-    public String getAssistantName() {
+    public void updateAssistantName() {
 
         Log.d("Debug", "getAssistantName:ID:  " + App.getModel().getID() + '\n');
         Firebase asistNameFireBase = fb.child(ASSISTANTS_DETAILS_CHILD).child(App.getModel().getID()).child(ASSISTANT_NAME_CHILD);
@@ -187,19 +193,18 @@ public class FirebaseMediator implements IServerMediator
             public void onDataChange(DataSnapshot snapshot) {
                 assisName = snapshot.getValue(String.class);
                 Log.d("Debug", "getAssistantName:onDataChange:name:  " + assisName + '\n');
+                updateDataAssistantListener.onUpdatedData();
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         Log.d("Debug", "getAssistantName:name:  " + assisName + '\n');
-        return assisName;
     }
 
-
+    @Override
+    public String getAssistantName() {
+        return assisName;
+    }
 }

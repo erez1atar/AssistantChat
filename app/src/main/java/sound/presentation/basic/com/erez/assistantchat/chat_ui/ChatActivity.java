@@ -53,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
 
-        Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " " + App.getModel().getUserData().getAvatar());
+        //Log.d("ChatActivity - onCreate", "user data : " + " " + App.getModel().getUserData().getAvatar());
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
         conversationList = (ListView) findViewById(R.id.conversation_list);
@@ -99,9 +99,9 @@ public class ChatActivity extends AppCompatActivity {
                 TextView date = (TextView) view.findViewById(R.id.date);
                 TextView senderName = (TextView) view.findViewById(R.id.sender_name);
                 msg.setText(message.getMsg());
-                date.setText(message.getDate());
+                date.setText(currentDate());
                 senderName.setText(message.getSendingName());
-                userIP.setText(message.getIp());
+                userIP.setText(message.getIp());//ip only for user
             }
         };
 

@@ -29,15 +29,15 @@ public class ConnectionActivity extends AppCompatActivity
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
-                    controller.changeAvailableStatus(isChecked);
-                    /*if(isChecked)
-                    {
-                        App.getServerMediator().registerOpenSessionsListener(controller);
-                    }
-                    else
-                    {
-                        App.getServerMediator().clearOpenSessionsListener();
-                    }*/
+                controller.changeAvailableStatus(isChecked);
+                /*if(isChecked)
+                {
+                    App.getServerMediator().registerOpenSessionsListener(controller);
+                }
+                else
+                {
+                    App.getServerMediator().clearOpenSessionsListener();
+                }*/
                 }
 
             });

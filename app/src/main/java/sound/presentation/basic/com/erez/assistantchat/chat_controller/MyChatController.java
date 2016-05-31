@@ -8,6 +8,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
+import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
+import sound.presentation.basic.com.erez.assistantchat.misc.App;
+import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
 /**
@@ -57,6 +60,11 @@ public class MyChatController implements IChatController, ValueEventListener {
         Log.d("Debug", "AssisChat:enter onDataChange");
             if (! dataSnapshot.getValue(Boolean.class) ) {
                 Log.d("Debug", "AssisChat:onDataChange false");
+                //sendDisconnectedMsgFromOtherSide();
+                //instead dialog
+            }
+            else {
+                serverMediator.updateAssistantName();
             }
             Log.d("Debug", "AssisChat:onDataChange");
 //        }
@@ -65,6 +73,11 @@ public class MyChatController implements IChatController, ValueEventListener {
     @Override
     public void onCancelled(FirebaseError firebaseError) {
 
+    }
+
+    private void sendDisconnectedMsgFromOtherSide() {
+        IMessage endMsg = Factory.createMessage("userName disconnected", "", "system", "");
+        sendToServer(endMsg);
     }
 
 }
