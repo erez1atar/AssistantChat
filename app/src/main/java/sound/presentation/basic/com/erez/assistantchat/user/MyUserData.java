@@ -22,13 +22,13 @@ public class MyUserData implements IUserData
     @Override
     public String getName()
     {
-        return null;
+        return name;
     }
 
     @Override
     public int getAvatar()
     {
-        return 0;
+        return avatar;
     }
 
     public void setName(String name)

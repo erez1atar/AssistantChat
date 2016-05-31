@@ -12,7 +12,6 @@ import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
-import sound.presentation.basic.com.erez.assistantchat.user.IUserData;
 import sound.presentation.basic.com.erez.assistantchat.user.MyUserData;
 
 /**
@@ -40,6 +39,8 @@ public class FirebaseMediator implements IServerMediator
     private ValueEventListener listener;
     private OpenSessionsListener openSessionsListener;
     private ValueEventListener valueEventListener;
+    private DataListener dataListener;
+    private ValueEventListener valueEventListenerUserDetails;
 
     public FirebaseMediator()
     {
@@ -58,8 +59,7 @@ public class FirebaseMediator implements IServerMediator
     public void login(final ILoginAuthentication authentication)
     {
         final IModel model = App.getModel();
-        fb.authWithPassword(model.getEmail(), model.getPassword(), new Firebase.AuthResultHandler()
-        {
+        fb.authWithPassword(model.getEmail(), model.getPassword(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData)
             {
@@ -80,17 +80,42 @@ public class FirebaseMediator implements IServerMediator
     @Override
     public void updateUserData()
     {
-        Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(USER_DATA_CHILD);
+        Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID());
+        valueEventListenerUserDetails = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.hasChild(CONNECTED))
+                {
+                    String name = dataSnapshot.child(USER_DATA_CHILD).child("name").getValue(String.class);
+                    Integer avatar = dataSnapshot.child(USER_DATA_CHILD).child("avatar").getValue(Integer.class);
+                    MyUserData myUserData = new MyUserData(name, avatar);
+
+                    App.getModel().setUserData(myUserData);
+                    dataListener.onDetailsUpdated();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError)
+            {
+
+            }
+        };
+        fbUserData.addValueEventListener(valueEventListenerUserDetails);
+        /*Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(USER_DATA_CHILD);
+        Log.d("Mediator-updateUserData", "onDataChange " + App.getModel().getID());
         if(fbUserData != null)
         {
             fbUserData.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {
-                    Log.d("Mediator-updateUserData", "onDataChange");
-                    MyUserData myUserData = dataSnapshot.getValue(MyUserData.class);
-                    //Log.d("Mediator - updateUserData", "userData = " + myUserData.getAvatar() + " " + myUserData.getName());
-                    App.getModel().setUserData(dataSnapshot.getValue(MyUserData.class));
+                    Log.d("Mediator-updateUserData", "onDataChange " + "userData name = " + dataSnapshot.child(USER_DATA_CHILD).child("name").getValue(String.class));
+                    MyUserData myUserData = new MyUserData(dataSnapshot.child("name").getValue(String.class), dataSnapshot.child("avatar").getValue(Integer.class));
+                    Log.d("Mediator-updateUserData", "userData = " + myUserData.getAvatar() + " " + myUserData.getName());
+                    App.getModel().setUserData(myUserData);
+                    dataListener.onDetailsUpdated();
                 }
 
                 @Override
@@ -99,7 +124,7 @@ public class FirebaseMediator implements IServerMediator
                     Log.e("updateUserData", firebaseError.getMessage());
                 }
             });
-        }
+        }*/
     }
 
     @Override
@@ -134,6 +159,20 @@ public class FirebaseMediator implements IServerMediator
             openSessionsListener = null;
             fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
         }
+    }
+
+    @Override
+    public void registerDataDetailsListener(DataListener dataListener)
+    {
+        this.dataListener = dataListener;
+        updateUserData();
+    }
+
+    @Override
+    public void unregisterDataDetailsListener(DataListener dataListener)
+    {
+        Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID());
+        fbUserData.removeEventListener(valueEventListenerUserDetails);
     }
 
     @Override

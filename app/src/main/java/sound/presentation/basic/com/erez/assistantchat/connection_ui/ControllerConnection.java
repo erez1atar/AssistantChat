@@ -3,7 +3,6 @@ package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 import android.util.Log;
 
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
-import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivityLastMsg;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
@@ -12,7 +11,7 @@ import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 /**
  * Controller for handling background connection from server before transitioning to the chat activities.
  */
-public class ControllerConnection implements IServerMediator.OpenSessionsListener, IControllerConnection
+public class ControllerConnection implements IServerMediator.OpenSessionsListener, IControllerConnection, IServerMediator.DataListener
 {
     private IServerMediator serverMediator;
     private IModel model;
@@ -28,9 +27,9 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
 //        App.getServerMediator().changeAvailableStatus(false);
 //        App.getServerMediator().clearOpenSessionsListener();
-        updateUserData();
+        App.getServerMediator().registerDataDetailsListener(this);
         changeAvailableStatus(false);
-        ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
+        //ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
     }
 
     @Override
@@ -74,4 +73,12 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     }
 
 
+    @Override
+    public void onDetailsUpdated()
+    {
+        App.getServerMediator().changeAvailableStatus(false);
+        App.getServerMediator().clearOpenSessionsListener();
+        App.getServerMediator().unregisterDataDetailsListener(this);
+        ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
+    }
 }

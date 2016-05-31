@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
         mediator.setListener((ValueEventListener) controller);
         mediator.executeListeningConnected();
 
+
         Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " " + App.getModel().getUserData().getAvatar());
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
