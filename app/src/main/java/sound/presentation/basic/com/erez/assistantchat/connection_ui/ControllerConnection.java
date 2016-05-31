@@ -2,17 +2,15 @@ package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 
 import android.util.Log;
 
+import java.io.DataOutputStream;
+
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
-/**
- * Controller for handling background connection from server before transitioning to the chat activities.
- */
-public class ControllerConnection implements IServerMediator.OpenSessionsListener, IControllerConnection, IServerMediator.DataListener
-public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection
+public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection, IServerMediator.DataListener
 {
     private IServerMediator serverMediator;
     private IModel model;
