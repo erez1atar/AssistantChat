@@ -64,7 +64,7 @@ public class MyChatController implements IChatController, ValueEventListener {
                 //instead dialog
             }
             else {
-                serverMediator.updateAssistantName();
+               // serverMediator.updateAssistantName();
             }
             Log.d("Debug", "AssisChat:onDataChange");
 //        }
