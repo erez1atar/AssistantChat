@@ -127,9 +127,9 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 
     private void sendMessage(String msg, String date, String sendingName, String ip)
     {
-        ChatMessage chatMessage = (ChatMessage) Factory.createMessage(msg, date, sendingName, ip);
+//        ChatMessage chatMessage = (ChatMessage) Factory.createMessage(msg, date, sendingName, ip);
 
-        controller.sendToServer(chatMessage);
+//        controller.sendToServer(chatMessage);
     }
 
 //    public void displayMessage(ChatMessage chatMessage) {

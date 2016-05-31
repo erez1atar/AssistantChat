@@ -10,4 +10,10 @@ public interface IMessage
     String getMsg();
 
     String getSendingName();
+
+    String getIp();
+
+    String getSenderID();
+
+    Boolean getLastMsg();
 }
