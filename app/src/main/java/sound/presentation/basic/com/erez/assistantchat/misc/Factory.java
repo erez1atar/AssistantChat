@@ -9,8 +9,8 @@ import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
  */
 public class Factory
 {
-    public static IMessage createMessage(String msg, String date, String sendingName, String ip)
+    public static IMessage createMessage(String msg, String date, String sendingName, String ip, String senderID, Boolean lastMsg)
     {
-        return new ChatMessage(msg, date, sendingName, ip);
+        return new ChatMessage(msg, date, sendingName, ip, senderID, lastMsg);
     }
 }

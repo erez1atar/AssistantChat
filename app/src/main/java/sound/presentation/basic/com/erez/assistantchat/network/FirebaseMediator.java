@@ -95,7 +95,7 @@ public class FirebaseMediator implements IServerMediator
                 if(dataSnapshot.hasChild(CONNECTED))
                 {
                     String name = dataSnapshot.child(USER_DATA_CHILD).child("name").getValue(String.class);
-                    Integer avatar = dataSnapshot.child(USER_DATA_CHILD).child("avatar").getValue(Integer.class);
+                    int avatar = Integer.parseInt(dataSnapshot.child(USER_DATA_CHILD).child("avatar").getValue(String.class));
                     MyUserData myUserData = new MyUserData(name, avatar);
 
                     App.getModel().setUserData(myUserData);

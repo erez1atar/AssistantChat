@@ -76,7 +76,7 @@ public class MyChatController implements IChatController, ValueEventListener {
     }
 
     private void sendDisconnectedMsgFromOtherSide() {
-        IMessage endMsg = Factory.createMessage("userName disconnected", "", "system", "");
+        IMessage endMsg = Factory.createMessage("userName disconnected", "", "system", "","",false);
         sendToServer(endMsg);
     }
 
