@@ -30,7 +30,6 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
 //        App.getServerMediator().clearOpenSessionsListener();
         App.getServerMediator().registerDataDetailsListener(this);
         changeAvailableStatus(false);
-
     }
 
     @Override
@@ -73,11 +72,6 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
         changeAvailableStatus(false);
     }
 
-    @Override
-    public void updateUserData()
-    {
-        App.getServerMediator().updateUserData();
-    }
 
 
     @Override
