@@ -3,6 +3,7 @@ package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 import android.util.Log;
 
 import java.io.DataOutputStream;
+import java.lang.ref.WeakReference;
 
 import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
@@ -14,12 +15,14 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
 {
     private IServerMediator serverMediator;
     private IModel model;
+    private WeakReference<IConnectionUI> iConnectionUIWeakReference;
 
-    public ControllerConnection()
+    public ControllerConnection(IConnectionUI iConnectionUI)
     {
         serverMediator = App.getServerMediator();
         model = App.getModel();
         serverMediator.setUpdateDataAssistantListener(this);
+        iConnectionUIWeakReference = new WeakReference<IConnectionUI>(iConnectionUI);
     }
 
     @Override
@@ -36,6 +39,11 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     @Override
     public void onUpdatedData() {
         Log.d("ControllerConnection", "onUpdatedData");
+        IConnectionUI connectionUI = iConnectionUIWeakReference.get();
+        if( connectionUI != null)
+        {
+            connectionUI.onAvailableStatusChanged(false);
+        }
         ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
     }
 
@@ -81,7 +89,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     {
         Log.d("ControllerConnection", "onDetailsUpdated");
         App.getServerMediator().changeAvailableStatus(false);
-        App.getServerMediator().unregisterDataDetailsListener(this);
+        //App.getServerMediator().unregisterDataDetailsListener(this); // its removed when ondatachange called
         serverMediator.updateAssistantName();
     }
 }

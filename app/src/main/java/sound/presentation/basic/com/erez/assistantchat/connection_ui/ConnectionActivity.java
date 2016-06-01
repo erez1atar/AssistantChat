@@ -9,20 +9,24 @@ import android.widget.Switch;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
 
-public class ConnectionActivity extends AppCompatActivity
+public class ConnectionActivity extends AppCompatActivity implements IConnectionUI
 {
+    private Switch availableSwitch;
+    private IControllerConnection controller;
+    private boolean chatOpened;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
 
-        final IControllerConnection controller = new ControllerConnection();
+        controller = new ControllerConnection(this);
 
         controller.changeAvailableStatus(false);
         controller.addToActiveAssistants();
 
-        final Switch availableSwitch = (Switch)findViewById(R.id.availableSwitch);
+        availableSwitch = (Switch)findViewById(R.id.availableSwitch);
         if (availableSwitch != null)
         {
             availableSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -55,5 +59,35 @@ public class ConnectionActivity extends AppCompatActivity
             });
         }
 
+    }
+
+    @Override
+    public void onAvailableStatusChanged(boolean isAvailable)
+    {
+        availableSwitch.setChecked(isAvailable);
+    }
+
+    @Override
+    public void OnChatOpened()
+    {
+        chatOpened = true;
+    }
+
+    @Override
+    protected void onStop()
+    {
+        controller.changeAvailableStatus(false);
+        if(chatOpened)
+        {
+            controller.finishShift();
+        }
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        chatOpened = false;
+        super.onResume();
     }
 }
