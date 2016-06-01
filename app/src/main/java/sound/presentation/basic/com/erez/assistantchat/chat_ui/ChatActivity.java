@@ -85,7 +85,7 @@ public class ChatActivity extends AppCompatActivity {
 //                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
                 //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
                 ////
-                sendMessage(String.valueOf(sendingMsg.getText()), TimerUtility.currentTime(), assistantName , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
+                sendMessage(String.valueOf(sendingMsg.getText()), TimerUtility.currentTime(), assistantName); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
                 sendingMsg.setText("");
 
             }
@@ -116,18 +116,9 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-    private String currentDate()
+    private void sendMessage(String msg, String date, String sendingName)
     {
-        SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
-        df.setTimeZone(TimeZone.getDefault() );
-//      Calendar.getInstance().setTimeZone(TimeZone.getDefault() );
-        return df.format( Calendar.getInstance().getTime() ) ; // + Calendar.getInstance().(Calendar.DST_OFFSET) ) ;//Calendar.getInstance().getTime()
-    }
-
-
-    private void sendMessage(String msg, String date, String sendingName, String ip)
-    {
-        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, ip, "1", false);
+        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, "", "1", false);
         controller.sendToServer(chatMessage);
     }
 
