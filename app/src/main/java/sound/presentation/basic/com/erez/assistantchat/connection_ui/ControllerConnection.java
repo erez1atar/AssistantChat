@@ -81,7 +81,7 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     {
         Log.d("ControllerConnection", "onDetailsUpdated");
         App.getServerMediator().changeAvailableStatus(false);
-        App.getServerMediator().unregisterDataDetailsListener(this);
+        //App.getServerMediator().unregisterDataDetailsListener(this); // its removed when ondatachange called
         serverMediator.updateAssistantName();
     }
 }

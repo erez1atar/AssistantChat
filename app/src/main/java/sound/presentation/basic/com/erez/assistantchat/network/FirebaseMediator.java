@@ -87,7 +87,7 @@ public class FirebaseMediator implements IServerMediator
     @Override
     public void updateUserData()
     {
-        Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID());
+        final Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID());
         valueEventListenerUserDetails = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -100,6 +100,7 @@ public class FirebaseMediator implements IServerMediator
 
                     App.getModel().setUserData(myUserData);
                     dataListener.onDetailsUpdated();
+                    fbUserData.removeEventListener(valueEventListenerUserDetails); // TODO: 01/06/2016 check!!! maybe remove
                 }
             }
 
