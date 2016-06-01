@@ -147,6 +147,9 @@ public class FirebaseMediator implements IServerMediator
                 {
                     Log.d("FirebaseMediator", "registerOpenSessionsListener " + "id  = " + App.getModel().getID());
                     openSessionsListener.onChatOpened();
+                    
+                    openSessionsListener = null; //// TODO: 01/06/2016 maybe remove 
+                    fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
                 }
             }
 
