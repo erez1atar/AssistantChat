@@ -23,7 +23,6 @@ import sound.presentation.basic.com.erez.assistantchat.chat_controller.MyChatCon
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
-import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
 import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 
 public class ChatActivityLastMsg extends AppCompatActivity {
@@ -46,7 +45,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
         controller = new MyChatController();
         mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
-        mediator.setListener((ValueEventListener) controller);
+        mediator.setListenerOnConnected((ValueEventListener) controller);
         mediator.executeListeningConnected();
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);

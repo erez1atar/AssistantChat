@@ -38,8 +38,9 @@ public interface IServerMediator
     void changeAvailableStatus(boolean available);
     void endConversation();
     void sendMessage(IMessage message);
-    void setListener(ValueEventListener listener);
+    void setListenerOnConnected(ValueEventListener listener);
     void executeListeningConnected();
+    void unListeningConnected();
 
     void registerOpenSessionsListener(OpenSessionsListener listener);
     void clearOpenSessionsListener();

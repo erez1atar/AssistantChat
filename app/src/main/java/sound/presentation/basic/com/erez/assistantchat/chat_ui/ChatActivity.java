@@ -50,7 +50,7 @@ public class ChatActivity extends AppCompatActivity {
         controller = new MyChatController();
         mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
-        mediator.setListener((ValueEventListener) controller);
+        mediator.setListenerOnConnected((ValueEventListener) controller);
         mediator.executeListeningConnected();
 
 

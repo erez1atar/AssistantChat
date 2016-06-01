@@ -60,6 +60,7 @@ public class MyChatController implements IChatController, ValueEventListener {
         Log.d("Debug", "AssisChat:enter onDataChange");
             if (! dataSnapshot.getValue(Boolean.class) ) {
                 Log.d("Debug", "AssisChat:onDataChange false");
+                serverMediator.unListeningConnected();
                 //sendDisconnectedMsgFromOtherSide();
                 //instead dialog
             }
