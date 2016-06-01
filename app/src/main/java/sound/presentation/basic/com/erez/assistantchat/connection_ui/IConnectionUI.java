@@ -6,4 +6,6 @@ package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 public interface IConnectionUI
 {
     void onAvailableStatusChanged(boolean isAvailable);
+
+    void OnChatOpened();
 }
