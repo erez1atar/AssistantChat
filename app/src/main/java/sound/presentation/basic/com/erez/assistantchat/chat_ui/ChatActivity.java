@@ -127,8 +127,11 @@ public class ChatActivity extends AppCompatActivity {
 
 //    public void displayMessage(ChatMessage chatMessage) {
 //
-//        adapterList.addMsgs(chatMessage);
-//        //conversationList.setText(finalMsg);
+//    @Override
+//    protected void onStop()
+//    {
+//        mediator.endConversation();
+//        super.onStop();
 //    }
 
     @Override
