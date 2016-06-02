@@ -90,7 +90,9 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-        adapterList = new MyFirebaseListAdapter(this, ChatMessage.class, R.layout.chat_assistant_list_item, mediator.getMessagesDB(), true);
+
+        adapterList = new MyFirebaseListAdapter(this, ChatMessage.class, R.layout.chat_user_list_item, mediator.getMessagesDB(), true);
+
 //        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getMessagesDB() )
 //        {
 //            @Override
@@ -122,12 +124,12 @@ public class ChatActivity extends AppCompatActivity {
         controller.sendToServer(chatMessage);
     }
 
-
-    @Override
-    protected void onStop()
-    {
-        mediator.endConversation();
-        super.onStop();
-    }
+//
+//    @Override
+//    protected void onStop()
+//    {
+//        mediator.endConversation();
+//        super.onStop();
+//    }
 
 }
