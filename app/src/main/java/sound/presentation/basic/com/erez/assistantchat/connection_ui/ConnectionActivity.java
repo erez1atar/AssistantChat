@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
@@ -14,6 +15,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     private Switch availableSwitch;
     private IControllerConnection controller;
     private boolean chatOpened;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,6 +24,8 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         setContentView(R.layout.activity_connection);
 
         controller = new ControllerConnection(this);
+
+        progressBar = (ProgressBar)findViewById(R.id.progressbarId);
 
         controller.changeAvailableStatus(false);
 
@@ -32,7 +36,8 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
-                controller.changeAvailableStatus(isChecked);
+                    controller.changeAvailableStatus(isChecked);
+                    progressBar.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
                 }
 
             });
@@ -80,6 +85,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     {
         chatOpened = false;
         controller.addToActiveAssistants();
+        progressBar.setVisibility(View.INVISIBLE);
         super.onResume();
     }
 }
