@@ -217,16 +217,19 @@ public class FirebaseMediator implements IServerMediator
         Log.d("Debug", "FirebaseMediator::endConversation");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.getValue(Boolean.class)){//first one to disconnect
+            public void onDataChange(DataSnapshot snapshot)
+            {
+                Log.d("FirebaseMediator:endConve" , "connected =" +  snapshot.getValue(Boolean.class));
+                if (snapshot.getValue(Boolean.class)) {//first one to disconnect
                     fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
-                }else{//second to disconnect
+                } else {//second to disconnect
                     fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).removeValue();
                 }
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(FirebaseError firebaseError)
+            {
             }
         });
 
