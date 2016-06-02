@@ -3,10 +3,12 @@ package sound.presentation.basic.com.erez.assistantchat.network;
 import android.util.Log;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.firebase.ui.auth.core.FirebaseLoginDialog;
 
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 
@@ -34,6 +36,7 @@ public class FirebaseMediator implements IServerMediator
     public static final String CONNECTED = "connected";
 
     private Firebase fb;
+
     private String assisName;
     private ValueEventListener listenerOnConnected;
     private OpenSessionsListener openSessionsListener;
@@ -64,8 +67,7 @@ public class FirebaseMediator implements IServerMediator
     public void login(final ILoginAuthentication authentication)
     {
         final IModel model = App.getModel();
-        fb.authWithPassword(model.getEmail(), model.getPassword(), new Firebase.AuthResultHandler()
-        {
+        fb.authWithPassword(model.getEmail(), model.getPassword(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData)
             {
@@ -145,6 +147,11 @@ public class FirebaseMediator implements IServerMediator
                 if(dataSnapshot.hasChild(App.getModel().getID()))
                 {
                     Log.d("FirebaseMediator", "registerOpenSessionsListener " + "id  = " + App.getModel().getID());
+                    Log.d("FirebaseMediator", "hadChild  = " + dataSnapshot.hasChild(App.getModel().getID()));
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        Log.d(TAG, "onDataChange: child = " + snapshot);
+                    }
                     openSessionsListener.onChatOpened();
                     
                     openSessionsListener = null; //// TODO: 01/06/2016 maybe remove 
@@ -155,10 +162,58 @@ public class FirebaseMediator implements IServerMediator
             @Override
             public void onCancelled(FirebaseError firebaseError)
             {
-
+                Log.d(TAG, "onCancelled: ");
             }
         };
+
         fb.child(OPENED_SESSIONS_CHILD).addValueEventListener(valueEventListener);
+
+
+        /*ChildEventListener addChildEventListener = fb.child(OPENED_SESSIONS_CHILD).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s)
+            {
+                String id = App.getModel().getID();
+                String key = dataSnapshot.getKey();
+                //if(dataSnapshot.hasChild(App.getModel().getID()))
+                if (id.equals(key)) {
+                    Log.d("FirebaseMediator", "Erez : registerOpenSessionsListener " + "id  = " + App.getModel().getID());
+                    Log.d("FirebaseMediator", "hadChild  = " + dataSnapshot.hasChild(App.getModel().getID()));
+                    long count = dataSnapshot.getChildrenCount();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d(TAG, "onDataChange: child = " + snapshot);
+                    }
+                    openSessionsListener.onChatOpened();
+
+                    openSessionsListener = null; //// TODO: 01/06/2016 maybe remove
+                    fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s)
+            {
+                String key = dataSnapshot.getKey();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot)
+            {
+                String key = dataSnapshot.getKey();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s)
+            {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError)
+            {
+
+            }
+        });*/
     }
 
     @Override
