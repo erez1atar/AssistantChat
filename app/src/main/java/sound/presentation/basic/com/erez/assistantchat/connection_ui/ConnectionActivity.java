@@ -24,7 +24,6 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         controller = new ControllerConnection(this);
 
         controller.changeAvailableStatus(false);
-        controller.addToActiveAssistants();
 
         availableSwitch = (Switch)findViewById(R.id.availableSwitch);
         if (availableSwitch != null)
@@ -34,14 +33,6 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                 controller.changeAvailableStatus(isChecked);
-                /*if(isChecked)
-                {
-                    App.getServerMediator().registerOpenSessionsListener(controller);
-                }
-                else
-                {
-                    App.getServerMediator().clearOpenSessionsListener();
-                }*/
                 }
 
             });
@@ -77,7 +68,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     protected void onStop()
     {
         controller.changeAvailableStatus(false);
-        if(chatOpened)
+        if(! chatOpened)
         {
             controller.finishShift();
         }
@@ -88,6 +79,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     protected void onResume()
     {
         chatOpened = false;
+        controller.addToActiveAssistants();
         super.onResume();
     }
 }

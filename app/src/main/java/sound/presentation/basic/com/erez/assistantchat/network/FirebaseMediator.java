@@ -30,6 +30,8 @@ public class FirebaseMediator implements IServerMediator
     private static final String MESSAGES_CHILD = "chat";
     private static final String LAST_MESSAGES_CHILD = "last_messages";
     private static final String USER_DATA_CHILD = "user_data";
+    private static final String NAME_USER_DATA_CHILD = "name";
+    private static final String AVATAR_USER_DATA_CHILD = "avatar";
 
     private static final String ASSISTANT_NAME_CHILD = "name";
     private static final String TAG = "FirebaseMediator";
@@ -95,8 +97,8 @@ public class FirebaseMediator implements IServerMediator
             {
                 if(dataSnapshot.hasChild(CONNECTED))
                 {
-                    String name = dataSnapshot.child(USER_DATA_CHILD).child("name").getValue(String.class);
-                    int avatar = Integer.parseInt(dataSnapshot.child(USER_DATA_CHILD).child("avatar").getValue(String.class));
+                    String name = dataSnapshot.child(USER_DATA_CHILD).child(NAME_USER_DATA_CHILD).getValue(String.class);
+                    int avatar = Integer.parseInt(dataSnapshot.child(USER_DATA_CHILD).child(AVATAR_USER_DATA_CHILD).getValue(String.class));
                     MyUserData myUserData = new MyUserData(name, avatar);
 
                     App.getModel().setUserData(myUserData);
