@@ -121,7 +121,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage(String msg, String date, String sendingName)
     {
-        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, "", "1", false);
+        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, userIp, "1", false);
         controller.sendToServer(chatMessage);
     }
 
