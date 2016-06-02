@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
+import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
 
 public class ConnectionActivity extends AppCompatActivity implements IConnectionUI
 {
@@ -25,6 +26,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
 
         controller.changeAvailableStatus(false);
         controller.addToActiveAssistants();
+        Utility.findUserIP();
 
         availableSwitch = (Switch)findViewById(R.id.availableSwitch);
         if (availableSwitch != null)
@@ -81,6 +83,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         {
             controller.finishShift();
         }
+        Utility.resetIP();
         super.onStop();
     }
 

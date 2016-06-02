@@ -203,8 +203,8 @@ public class FirebaseMediator implements IServerMediator
 
     public void endConversation() {
         Log.d("Debug", "FirebaseMediator::endConversation");
-        fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
         unListeningConnected();
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
     }
 
     public Firebase getMessagesDB()

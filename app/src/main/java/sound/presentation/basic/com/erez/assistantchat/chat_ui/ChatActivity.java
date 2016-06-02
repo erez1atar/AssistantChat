@@ -35,7 +35,8 @@ public class ChatActivity extends AppCompatActivity {
     private EditText sendingMsg;
     private Button sendButton;
     private Button endConversationButton;
-    private TextView userIP;
+    private TextView userIpTextView;
+    private String userIp;
 
     //private MessagesAdapter adapterList;
     private FirebaseListAdapter<ChatMessage> adapterList;
@@ -52,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
         controller.setServerMediator(mediator);
         mediator.setListenerOnConnected((ValueEventListener) controller);
         mediator.executeListeningConnected();
-
+        userIp = Utility.getUserIP();
 
         Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " " + App.getModel().getUserData().getAvatar());
         //Log.d("ChatActivity - onCreate", "user data : " + " " + App.getModel().getUserData().getAvatar());
@@ -60,7 +61,7 @@ public class ChatActivity extends AppCompatActivity {
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
         conversationList = (ListView) findViewById(R.id.conversation_list);
         endConversationButton = (Button) findViewById(R.id.end_convrs_button);
-        userIP = (TextView)  findViewById(R.id.user_ip);
+        userIpTextView = (TextView)  findViewById(R.id.user_ip);
 
         sendingMsg = (EditText) findViewById(R.id.sending_msg);
         sendButton = (Button) findViewById(R.id.send_button);
@@ -83,7 +84,7 @@ public class ChatActivity extends AppCompatActivity {
 //                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
                 //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
                 ////
-                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), assistantName , Utility.getUserIP()); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
+                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), assistantName , userIp); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
                 sendingMsg.setText("");
 
             }
@@ -103,7 +104,7 @@ public class ChatActivity extends AppCompatActivity {
                 msg.setText(message.getMsg());
                 date.setText(currentDate());
                 senderName.setText(message.getSendingName());
-                userIP.setText(message.getIp());//ip only for user
+                userIpTextView.setText(message.getIp());//ip only for user
             }
         };
 
