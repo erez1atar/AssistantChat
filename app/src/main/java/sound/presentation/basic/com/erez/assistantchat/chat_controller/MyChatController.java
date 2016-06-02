@@ -58,17 +58,20 @@ public class MyChatController implements IChatController, ValueEventListener {
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         Log.d("Debug", "AssisChat:enter onDataChange");
-            if (! dataSnapshot.getValue(Boolean.class) ) {
+        try {
+            if (!dataSnapshot.getValue(Boolean.class)) {
                 Log.d("Debug", "AssisChat:onDataChange false");
                 serverMediator.unListeningConnected();
                 //sendDisconnectedMsgFromOtherSide();
                 //instead dialog
-            }
-            else {
-               // serverMediator.updateAssistantName();
+            } else {
+                // serverMediator.updateAssistantName();
             }
             Log.d("Debug", "AssisChat:onDataChange");
 //        }
+        }catch (Exception e){
+            Log.d("MyChatController","this shouldn't really be hapenning");
+        }
     }
 
     @Override
