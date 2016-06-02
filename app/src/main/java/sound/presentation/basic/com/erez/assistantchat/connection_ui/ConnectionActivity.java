@@ -12,13 +12,16 @@ import sound.presentation.basic.com.erez.assistantchat.R;
 public class ConnectionActivity extends AppCompatActivity implements IConnectionUI
 {
     private Switch availableSwitch;
+    private IControllerConnection controller;
+    private boolean chatOpened;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
 
-        final IControllerConnection controller = new ControllerConnection(this);
+        controller = new ControllerConnection(this);
 
         controller.changeAvailableStatus(false);
         controller.addToActiveAssistants();
@@ -62,5 +65,29 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     public void onAvailableStatusChanged(boolean isAvailable)
     {
         availableSwitch.setChecked(isAvailable);
+    }
+
+    @Override
+    public void OnChatOpened()
+    {
+        chatOpened = true;
+    }
+
+    @Override
+    protected void onStop()
+    {
+        controller.changeAvailableStatus(false);
+        if(chatOpened)
+        {
+            controller.finishShift();
+        }
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        chatOpened = false;
+        super.onResume();
     }
 }
