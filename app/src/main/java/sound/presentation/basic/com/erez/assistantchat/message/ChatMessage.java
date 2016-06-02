@@ -16,15 +16,6 @@ public class ChatMessage implements IMessage
 
     public ChatMessage(){}
 
-//    public ChatMessage(String msg, String date, String sendingName, String ip, String senderID) {
-//        this.msg = msg;
-//        this.date = date;
-//        this.sendingName = sendingName;
-//        this.ip = ip;
-//        this.senderID = senderID;
-//        this.lastMsg = false;
-//
-//    }
 
     public ChatMessage(String msg, String date, String sendingName, String ip, String senderID, Boolean lastMsg) {
         this.msg = msg;

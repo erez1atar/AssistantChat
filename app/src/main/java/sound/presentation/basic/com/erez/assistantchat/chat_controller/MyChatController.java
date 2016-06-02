@@ -63,7 +63,6 @@ public class MyChatController implements IChatController, ValueEventListener {
                 serverMediator.unListeningConnected();
                 //sendDisconnectedMsgFromOtherSide();
                 //instead dialog
-
             }
             else {
                // serverMediator.updateAssistantName();

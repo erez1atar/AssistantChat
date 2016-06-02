@@ -25,8 +25,10 @@ import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
+import sound.presentation.basic.com.erez.assistantchat.misc.TimerUtility;
 import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
 import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
+import sound.presentation.basic.com.erez.assistantchat.network.MyFirebaseListAdapter;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -39,7 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     private String userIp;
 
     //private MessagesAdapter adapterList;
-    private FirebaseListAdapter<ChatMessage> adapterList;
+    private MyFirebaseListAdapter adapterList;
     private FirebaseMediator mediator;
 
     @Override
@@ -69,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediator.endConversation();
-                Log.d("OnClickListener - Chat" , "");
+                Log.d("OnClickListener - Chat", "");
                 finish();
             }
         });
@@ -84,29 +86,31 @@ public class ChatActivity extends AppCompatActivity {
 //                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
                 //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
                 ////
-                sendMessage(String.valueOf(sendingMsg.getText()), currentDate(), assistantName , userIp); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
+                sendMessage(String.valueOf(sendingMsg.getText()), TimerUtility.currentTime(), assistantName); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
                 sendingMsg.setText("");
 
             }
         });
 
-        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getMessagesDB() )
-        {
-            @Override
-            protected void populateView(View view, ChatMessage message, int i) {
-                Log.d("fireAdap_populateView", "i is " + i + "\nand count is " + adapterList.getCount());
-                Log.d("Debug", "populateView");
-//controller.saveLastMessage(message);
+        adapterList = new MyFirebaseListAdapter(this, ChatMessage.class, R.layout.chat_user_list_item, mediator.getMessagesDB(), true);
 
-                TextView msg = (TextView) view.findViewById(R.id.message);
-                TextView date = (TextView) view.findViewById(R.id.date);
-                TextView senderName = (TextView) view.findViewById(R.id.sender_name);
-                msg.setText(message.getMsg());
-                date.setText(currentDate());
-                senderName.setText(message.getSendingName());
-                userIpTextView.setText(message.getIp());//ip only for user
-            }
-        };
+//        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getMessagesDB() )
+//        {
+//            @Override
+//            protected void populateView(View view, ChatMessage message, int i) {
+//                Log.d("fireAdap_populateView", "i is " + i + "\nand count is " + adapterList.getCount());
+//                Log.d("Debug", "populateView");
+////controller.saveLastMessage(message);
+//
+//                TextView msg = (TextView) view.findViewById(R.id.message);
+//                TextView date = (TextView) view.findViewById(R.id.date);
+//                TextView senderName = (TextView) view.findViewById(R.id.sender_name);
+//                msg.setText(message.getMsg());
+//                date.setText(currentDate());
+//                senderName.setText(message.getSendingName());
+//                userIP.setText(message.getIp());//ip only for user
+//            }
+//        };
 
 //        adapterList = new MessagesAdapter(this, R.layout.item_list);
 //        adapterList.setMsgsArr(getLastMessages());
@@ -115,43 +119,9 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-
-    //todo - once you create the firebase location (by getting the assistant)
-    //you call the following function
-    // mediator.sendLastMessages();
-
-
-//
-//        //todo - add in the on stop - on destroy - whatever...
-//        List<IMessage> lastMessages = new ArrayList<>(10);
-//        for (int i = 0; i < 10 ; i++){
-//            lastMessages.add(adapterList.getItem(adapterList.getCount()- (10 - i)));
-//        }
-//        Persistance per = new Persistance();
-//        per.saveLastMessage(lastMessages);
-//
-
-    private String currentDate()
+    private void sendMessage(String msg, String date, String sendingName)
     {
-        SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
-        df.setTimeZone(TimeZone.getDefault() );
-//      Calendar.getInstance().setTimeZone(TimeZone.getDefault() );
-        return df.format( Calendar.getInstance().getTime() ) ; // + Calendar.getInstance().(Calendar.DST_OFFSET) ) ;//Calendar.getInstance().getTime()
-    }
-
-    private List<ChatMessage> getLastMessages()
-    {
-//        List<ChatMessage> chatMessageArr = new ArrayList<>();
-//        while(  ) {//according token of user from server
-//            chatMessageArr.add( controller.getMessageFromServer() ) ; //should be in loop (depandant in the storing form in fireBase)
-//        }
-//        return chatMessageArr;
-        return new ArrayList<>();
-    }
-
-    private void sendMessage(String msg, String date, String sendingName, String ip)
-    {
-        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, ip, "1", false);
+        IMessage chatMessage = Factory.createMessage(msg, date, sendingName, "", "1", false);
         controller.sendToServer(chatMessage);
     }
 

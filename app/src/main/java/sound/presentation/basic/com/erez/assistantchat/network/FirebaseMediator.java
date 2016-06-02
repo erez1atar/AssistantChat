@@ -3,10 +3,12 @@ package sound.presentation.basic.com.erez.assistantchat.network;
 import android.util.Log;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.firebase.ui.auth.core.FirebaseLoginDialog;
 
 import sound.presentation.basic.com.erez.assistantchat.message.IMessage;
 
@@ -19,6 +21,7 @@ import sound.presentation.basic.com.erez.assistantchat.user.MyUserData;
  */
 public class FirebaseMediator implements IServerMediator
 {
+
     private static final String FIREBASE_ADDRESS = "https://incandescent-inferno-5809.firebaseio.com";
     private static final String ACTIVE_ASSISTANTS_CHILD = "active_assistants";
     private static final String ASSISTANTS_DETAILS_CHILD = "assistants";
@@ -27,6 +30,8 @@ public class FirebaseMediator implements IServerMediator
     private static final String MESSAGES_CHILD = "chat";
     private static final String LAST_MESSAGES_CHILD = "last_messages";
     private static final String USER_DATA_CHILD = "user_data";
+    private static final String NAME_USER_DATA_CHILD = "name";
+    private static final String AVATAR_USER_DATA_CHILD = "avatar";
 
     private static final String ASSISTANT_NAME_CHILD = "name";
     private static final String TAG = "FirebaseMediator";
@@ -34,6 +39,7 @@ public class FirebaseMediator implements IServerMediator
     public static final String CONNECTED = "connected";
 
     private Firebase fb;
+
     private String assisName;
     private ValueEventListener listenerOnConnected;
     private OpenSessionsListener openSessionsListener;
@@ -93,8 +99,8 @@ public class FirebaseMediator implements IServerMediator
             {
                 if(dataSnapshot.hasChild(CONNECTED))
                 {
-                    String name = dataSnapshot.child(USER_DATA_CHILD).child("name").getValue(String.class);
-                    int avatar = Integer.parseInt(dataSnapshot.child(USER_DATA_CHILD).child("avatar").getValue(String.class));
+                    String name = dataSnapshot.child(USER_DATA_CHILD).child(NAME_USER_DATA_CHILD).getValue(String.class);
+                    int avatar = Integer.parseInt(dataSnapshot.child(USER_DATA_CHILD).child(AVATAR_USER_DATA_CHILD).getValue(String.class));
                     MyUserData myUserData = new MyUserData(name, avatar);
 
                     App.getModel().setUserData(myUserData);
@@ -145,6 +151,11 @@ public class FirebaseMediator implements IServerMediator
                 if(dataSnapshot.hasChild(App.getModel().getID()))
                 {
                     Log.d("FirebaseMediator", "registerOpenSessionsListener " + "id  = " + App.getModel().getID());
+                    Log.d("FirebaseMediator", "hadChild  = " + dataSnapshot.hasChild(App.getModel().getID()));
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        Log.d(TAG, "onDataChange: child = " + snapshot);
+                    }
                     openSessionsListener.onChatOpened();
                     
                     openSessionsListener = null; //// TODO: 01/06/2016 maybe remove 
@@ -158,6 +169,7 @@ public class FirebaseMediator implements IServerMediator
 
             }
         };
+
         fb.child(OPENED_SESSIONS_CHILD).addValueEventListener(valueEventListener);
     }
 
@@ -203,8 +215,25 @@ public class FirebaseMediator implements IServerMediator
 
     public void endConversation() {
         Log.d("Debug", "FirebaseMediator::endConversation");
+        fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.getValue(Boolean.class)){//first one to disconnect
+                    fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
+                }else{//second to disconnect
+                    fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+
+
+
+        //fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
         unListeningConnected();
-        fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
     }
 
     public Firebase getMessagesDB()
