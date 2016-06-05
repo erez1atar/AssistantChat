@@ -219,10 +219,13 @@ public class FirebaseMediator implements IServerMediator
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.getValue(Boolean.class)){//first one to disconnect
+                    Log.d("Debug", "assistantCaht: endConversation: first disconnected");
                     fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
                 }else{//second to disconnect
+                    Log.d("Debug", "assistantCaht: endConversation: second disconnected");
                     fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).removeValue();
                 }
+                //unListeningConnected();
             }
 
             @Override
