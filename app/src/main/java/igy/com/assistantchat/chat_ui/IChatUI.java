@@ -1,4 +1,4 @@
-package sound.presentation.basic.com.erez.assistantchat.chat_ui;
+package igy.com.assistantchat.chat_ui;
 
 /**
  * Created by user on 05/06/2016.

@@ -1,5 +1,7 @@
 package igy.com.assistantchat.chat_ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,7 +25,7 @@ import igy.com.assistantchat.misc.Utility;
 import igy.com.assistantchat.network.FirebaseMediator;
 import igy.com.assistantchat.network.MyFirebaseListAdapter;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements IChatUI {
 
     private IChatController controller;
     private ListView conversationList;
@@ -43,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity_list);
         Log.d("chatActivity", "onCreate");
-        controller = new MyChatController();
+        controller = new MyChatController(this);
         mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListenerOnConnected((ValueEventListener) controller);
@@ -63,8 +65,8 @@ public class ChatActivity extends AppCompatActivity {
         endConversationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediator.endConversation();
-                Log.d("OnClickListener - Chat", "");
+                //mediator.endConversation();
+                Log.d("OnClickListener - Chat", "endConversationButton");
                 finish();
             }
         });
@@ -130,10 +132,31 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStop()
     {
+       // finish();
+        Log.d("ChatActivity", "onStop");
         mediator.endConversation();
         super.onStop();
     }
 
+    @Override
+    protected void onDestroy() {
+        Log.d("ChatActivity", "onDestroy");
+        super.onDestroy();
+    }
 
+    @Override
+    public void onUserDisconnected() {
+        Log.d("ChatActivity" , "onUserDisconnected");
+        new AlertDialog.Builder(ChatActivity.this)
+                .setTitle("Note")
+                .setMessage("User disconnected")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        ChatActivity.this.finish();
+                    }
+                }).show();
+    }
 
 }

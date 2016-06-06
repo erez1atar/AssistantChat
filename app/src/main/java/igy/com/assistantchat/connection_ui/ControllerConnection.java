@@ -10,7 +10,7 @@ import igy.com.assistantchat.misc.App;
 import igy.com.assistantchat.misc.IModel;
 import igy.com.assistantchat.network.IServerMediator;
 
-public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection , IServerMediator.DataListener
+public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection, IServerMediator.DataListener
 {
     private IServerMediator serverMediator;
     private IModel model;

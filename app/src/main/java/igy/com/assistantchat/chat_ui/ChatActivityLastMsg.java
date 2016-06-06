@@ -19,7 +19,6 @@ import java.util.TimeZone;
 
 import igy.com.assistantchat.R;
 import igy.com.assistantchat.chat_controller.IChatController;
-import igy.com.assistantchat.chat_controller.MyChatController;
 import igy.com.assistantchat.message.ChatMessage;
 import igy.com.assistantchat.misc.ActivityRouter;
 import igy.com.assistantchat.misc.App;
@@ -42,7 +41,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
         setContentView(R.layout.chat_activity_last_list);
 
         Log.d("chatActivityLastMsg","onCreate");
-        controller = new MyChatController();
+        //controller = new MyChatController();
         mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListenerOnConnected((ValueEventListener) controller);

@@ -7,6 +7,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.lang.ref.WeakReference;
+
+import igy.com.assistantchat.chat_ui.IChatUI;
 import igy.com.assistantchat.message.IMessage;
 import igy.com.assistantchat.misc.Factory;
 import igy.com.assistantchat.network.IServerMediator;
@@ -18,12 +21,17 @@ public class MyChatController implements IChatController, ValueEventListener {
 
 //    private WeakReference<IPresentChat> iWRPresent;
     private IServerMediator serverMediator;
+    private WeakReference<IChatUI> iChatUIWeakReference;
 //    private SavingLastMessage latestMessages = new SavingLastMessage(10);
 
     //get message according to identifier/token of user(can firebase do search into)
 //    public List<IMessage> getMessageFromServer() { //add parameters
 //        return serverMediator.getMessageHistory();
 //    }
+
+    public MyChatController(IChatUI iChatUI){
+        iChatUIWeakReference = new WeakReference<IChatUI>(iChatUI);
+    }
 
     @Override
     public void sendToServer(IMessage msg) {
@@ -49,7 +57,6 @@ public class MyChatController implements IChatController, ValueEventListener {
 //        }
 //    }
 
-    @Override
     public void setServerMediator(IServerMediator serverMediator) {
         this.serverMediator = serverMediator;
     }
@@ -62,9 +69,11 @@ public class MyChatController implements IChatController, ValueEventListener {
                 serverMediator.unListeningConnected();
                 //sendDisconnectedMsgFromOtherSide();
                 //instead dialog
-            }
-            else {
-               // serverMediator.updateAssistantName();
+                IChatUI iChatUI = iChatUIWeakReference.get();
+                if(iChatUI != null)
+                {
+                    iChatUI.onUserDisconnected();
+                }
             }
             Log.d("Debug", "AssisChat:onDataChange");
 //        }

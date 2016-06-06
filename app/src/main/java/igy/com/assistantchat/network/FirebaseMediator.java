@@ -9,7 +9,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import igy.com.assistantchat.message.IMessage;
-
 import igy.com.assistantchat.misc.App;
 import igy.com.assistantchat.misc.IModel;
 import igy.com.assistantchat.user.MyUserData;
@@ -212,29 +211,26 @@ public class FirebaseMediator implements IServerMediator
     }
 
     public void endConversation() {
-        Log.d("Debug", "FirebaseMediator::endConversation");
+        Log.d("Debug", "FirebaseMediator::endConversation: " + App.getModel().getID());
+        //fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
+        unListeningConnected();
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot)
-            {
-                Log.d("Firebase:endConvrsation" , "connected =" +  snapshot.getValue(Boolean.class));
-                if (snapshot.getValue(Boolean.class)) {//first one to disconnect
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.getValue(Boolean.class)){//first one to disconnect
+                    Log.d("Debug", "assistantCaht: endConversation: first disconnected");
                     fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
-                } else {//second to disconnect
+                }else{//second to disconnect
+                    Log.d("Debug", "assistantCaht: endConversation: second disconnected");
                     fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).removeValue();
                 }
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError)
-            {
+            public void onCancelled(FirebaseError firebaseError) {
             }
         });
 
-
-
-        //fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
-        unListeningConnected();
     }
 
     public Firebase getMessagesDB()
@@ -248,11 +244,13 @@ public class FirebaseMediator implements IServerMediator
     }
 
     public void executeListeningConnected() {
+        Log.d("firebaseMediator", "executeListeningConnected");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addValueEventListener(listenerOnConnected);
         //.addListenerForSingleValueEvent(listenerOnConnected);//child(CONNECTED).
     }
 
     public void unListeningConnected() {
+        Log.d("firebaseMediator", "unListeningConnected");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).removeEventListener(listenerOnConnected);
 
     }
