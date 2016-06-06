@@ -1,6 +1,7 @@
 package igy.com.assistantchat.network;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,7 +134,14 @@ public class MyFirebaseListAdapter extends FirebaseListAdapter {
         } else {
             time = timeStamper.get(key);
         }
-        date.setText(  (((ChatMessage) message).getLastMsg())   ?   ((ChatMessage) message).getDate() :   time);
+        if (((ChatMessage) message).getLastMsg()){
+            view.setBackgroundColor(Color.rgb(102, 255, 178));
+            date.setText(((ChatMessage) message).getDate());
+        }else{
+            view.setBackgroundColor(Color.WHITE);
+            date.setText(time);
+        }
+//        date.setText(  (((ChatMessage) message).getLastMsg())   ?   ((ChatMessage) message).getDate() :   time);
         senderName.setText(((ChatMessage) message).getSendingName());
     }
 }
