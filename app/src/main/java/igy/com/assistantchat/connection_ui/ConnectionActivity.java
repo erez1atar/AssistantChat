@@ -2,6 +2,7 @@ package igy.com.assistantchat.connection_ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -78,6 +79,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         controller.changeAvailableStatus(false);
         if(! chatOpened)
         {
+            Log.d("connectionActivity-onStop" ,"chatOpened = " + chatOpened  );
             controller.finishShift();
         }
         Utility.resetIP();
