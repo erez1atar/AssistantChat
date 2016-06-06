@@ -152,14 +152,14 @@ public class FirebaseMediator implements IServerMediator
                 {
                     Log.d("FirebaseMediator", "registerOpenSessionsListener " + "id  = " + App.getModel().getID());
                     Log.d("FirebaseMediator", "hadChild  = " + dataSnapshot.hasChild(App.getModel().getID()));
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                    {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Log.d(TAG, "onDataChange: child = " + snapshot);
                     }
                     openSessionsListener.onChatOpened();
-                    
-                    openSessionsListener = null; //// TODO: 01/06/2016 maybe remove 
+
+                    openSessionsListener = null; //// TODO: 01/06/2016 maybe remove
                     fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
+
                 }
             }
 
@@ -227,7 +227,6 @@ public class FirebaseMediator implements IServerMediator
                     Log.d("Debug", "assistantCaht: endConversation: second disconnected");
                     fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).removeValue();
                 }
-                //unListeningConnected();
             }
 
             @Override

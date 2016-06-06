@@ -10,6 +10,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.Query;
 import com.firebase.ui.FirebaseListAdapter;
 
+import java.util.HashMap;
+
 import sound.presentation.basic.com.erez.assistantchat.R;
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.TimerUtility;
@@ -22,9 +24,11 @@ public class MyFirebaseListAdapter extends FirebaseListAdapter {
     private final boolean lastMessagesVisible;
     private int offset;
     private boolean sendLastMessagesRequest;
+    private final HashMap<String,String> timeStamper = new HashMap<>(100);
 
     public MyFirebaseListAdapter(Activity activity, Class modelClass, int modelLayout, Firebase ref, boolean lastMessagesVisible) {
         super(activity, modelClass, modelLayout, ref);
+
         this.lastMessagesVisible = lastMessagesVisible;
     }
 
@@ -118,7 +122,18 @@ public class MyFirebaseListAdapter extends FirebaseListAdapter {
         TextView date = (TextView) view.findViewById(R.id.chat_date);
         TextView senderName = (TextView) view.findViewById(R.id.chat_name);
         msg.setText(((ChatMessage)message).getMsg());
-        date.setText(  (((ChatMessage) message).getLastMsg())   ?   ((ChatMessage) message).getDate() :   TimerUtility.currentTime());
+        TextView ip = (TextView)view.findViewById(R.id.chat_ip);
+        if (ip != null){
+            ip.setText(((ChatMessage)message).getIp());
+        }
+        String time = TimerUtility.currentTime();
+        String key = getRef(i).getKey();
+        if (! timeStamper.containsKey(key)){
+            timeStamper.put(key,time);
+        } else {
+            time = timeStamper.get(key);
+        }
+        date.setText(  (((ChatMessage) message).getLastMsg())   ?   ((ChatMessage) message).getDate() :   time);
         senderName.setText(((ChatMessage) message).getSendingName());
     }
 }

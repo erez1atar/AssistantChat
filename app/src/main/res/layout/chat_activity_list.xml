@@ -26,34 +26,34 @@
         android:layout_marginBottom="2dp"
         android:layout_gravity="center_horizontal" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_weight="10"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_weight="10"-->
+        <!--android:orientation="horizontal">-->
 
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="User IP: "
-            android:id="@+id/user_ip_title"
-            android:layout_weight="5"
-            android:layout_gravity="center_horizontal" />
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text="User IP: "-->
+            <!--android:id="@+id/user_ip_title"-->
+            <!--android:layout_weight="5"-->
+            <!--android:layout_gravity="center_horizontal" />-->
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="User IP: "
-            android:id="@+id/user_ip"
-            android:layout_weight="5"
-            android:layout_gravity="center_horizontal" />
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text="User IP: "-->
+            <!--android:id="@+id/user_ip"-->
+            <!--android:layout_weight="5"-->
+            <!--android:layout_gravity="center_horizontal" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <ListView
     android:layout_width="match_parent"
@@ -80,7 +80,6 @@
         android:layout_height="match_parent"
         android:id="@+id/sending_msg"
         android:layout_weight="8"
-        android:layout_below="@+id/textView"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
         />
