@@ -5,24 +5,34 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 
 import sound.presentation.basic.com.erez.assistantchat.R;
+import sound.presentation.basic.com.erez.assistantchat.misc.Utility;
 
-public class ConnectionActivity extends AppCompatActivity
+public class ConnectionActivity extends AppCompatActivity implements IConnectionUI
 {
+    private Switch availableSwitch;
+    private IControllerConnection controller;
+    private boolean chatOpened;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
 
-        final IControllerConnection controller = new ControllerConnection();
+        controller = new ControllerConnection(this);
+
+        progressBar = (ProgressBar)findViewById(R.id.progressbarId);
 
         controller.changeAvailableStatus(false);
         controller.addToActiveAssistants();
+        Utility.findUserIP();
 
-        final Switch availableSwitch = (Switch)findViewById(R.id.availableSwitch);
+        availableSwitch = (Switch)findViewById(R.id.availableSwitch);
         if (availableSwitch != null)
         {
             availableSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -30,14 +40,7 @@ public class ConnectionActivity extends AppCompatActivity
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     controller.changeAvailableStatus(isChecked);
-                    /*if(isChecked)
-                    {
-                        App.getServerMediator().registerOpenSessionsListener(controller);
-                    }
-                    else
-                    {
-                        App.getServerMediator().clearOpenSessionsListener();
-                    }*/
+                    progressBar.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
                 }
 
             });
@@ -55,5 +58,38 @@ public class ConnectionActivity extends AppCompatActivity
             });
         }
 
+    }
+
+    @Override
+    public void onAvailableStatusChanged(boolean isAvailable)
+    {
+        availableSwitch.setChecked(isAvailable);
+    }
+
+    @Override
+    public void OnChatOpened()
+    {
+        chatOpened = true;
+    }
+
+    @Override
+    protected void onStop()
+    {
+        controller.changeAvailableStatus(false);
+        if(! chatOpened)
+        {
+            controller.finishShift();
+        }
+        Utility.resetIP();
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        chatOpened = false;
+        controller.addToActiveAssistants();
+        progressBar.setVisibility(View.INVISIBLE);
+        super.onResume();
     }
 }

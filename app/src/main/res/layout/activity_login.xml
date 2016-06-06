@@ -27,6 +27,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:hint="example : igy@gmail.com"
+            android:inputType="textEmailAddress"
             android:id="@+id/emailText"/>
     </LinearLayout>
 
@@ -46,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:inputType="textPassword"
             android:id="@+id/passwordText"/>
     </LinearLayout>
 
@@ -54,5 +57,6 @@
         android:layout_height="50dp"
         android:id="@+id/loginButton"
         android:text="Login"/>
+
 
 </LinearLayout>

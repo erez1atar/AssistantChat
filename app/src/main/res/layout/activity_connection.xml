@@ -24,4 +24,10 @@
         android:layout_height="wrap_content"
         android:text="end of shift"
         android:id="@+id/end_of_shift_button"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:id="@+id/progressbarId"/>
 </LinearLayout>

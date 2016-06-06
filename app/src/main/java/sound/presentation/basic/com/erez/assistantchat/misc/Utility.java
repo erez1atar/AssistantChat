@@ -10,11 +10,14 @@ import java.net.URL;
  */
 public final class Utility
 {
-    public static String getUserIP()
-    {
-        final String[] ip = {null};
+    private static String ip;
+    private static Thread ipFindThread;
 
-        Thread ipFind = new Thread(new Runnable() {
+    public static void findUserIP()
+    {
+        //final String[] ip = {null};
+
+        ipFindThread = new Thread(new Runnable() {
             @Override
             public void run()
             {
@@ -22,7 +25,7 @@ public final class Utility
                 {
                     URL ipAdress = new URL("http://myexternalip.com/raw");
                     BufferedReader in = new BufferedReader(new InputStreamReader(ipAdress.openStream()));
-                    ip[0] = in.readLine();
+                    ip = in.readLine();
                 }
                 catch (IOException e)
                 {
@@ -31,16 +34,34 @@ public final class Utility
             }
         });
 
-        ipFind.start();
-        try
-        {
-            ipFind.join();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
+        ipFindThread.start();
+//        try
+//        {
+//            ipFindThread.join();
+//        }
+//        catch (InterruptedException e)
+//        {
+//            e.printStackTrace();
+//        }
+    }
 
-        return ip[0];
+    public static String getUserIP() {
+        if (ip == null) {
+            findUserIP();
+            try
+            {
+                ipFindThread.join();
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+        return ip;
+    }
+
+    public static void resetIP(){
+        ip = null;
     }
 }

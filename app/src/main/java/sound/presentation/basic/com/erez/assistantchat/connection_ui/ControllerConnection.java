@@ -2,34 +2,51 @@ package sound.presentation.basic.com.erez.assistantchat.connection_ui;
 
 import android.util.Log;
 
-import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivityLastMsg;
+import java.io.DataOutputStream;
+import java.lang.ref.WeakReference;
+
+import sound.presentation.basic.com.erez.assistantchat.chat_ui.ChatActivity;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
 import sound.presentation.basic.com.erez.assistantchat.misc.IModel;
 import sound.presentation.basic.com.erez.assistantchat.network.IServerMediator;
 
-/**
- * Controller for handling background connection from server before transitioning to the chat activities.
- */
-public class ControllerConnection implements IServerMediator.OpenSessionsListener, IControllerConnection
+public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection , IServerMediator.DataListener
 {
     private IServerMediator serverMediator;
     private IModel model;
+    private WeakReference<IConnectionUI> iConnectionUIWeakReference;
 
-    public ControllerConnection()
+    public ControllerConnection(IConnectionUI iConnectionUI)
     {
         serverMediator = App.getServerMediator();
         model = App.getModel();
+        serverMediator.setUpdateDataAssistantListener(this);
+        iConnectionUIWeakReference = new WeakReference<IConnectionUI>(iConnectionUI);
     }
+
     @Override
     public void onChatOpened()
     {
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
 //        App.getServerMediator().changeAvailableStatus(false);
 //        App.getServerMediator().clearOpenSessionsListener();
+        App.getServerMediator().clearOpenSessionsListener();
+        App.getServerMediator().registerDataDetailsListener(this);
         changeAvailableStatus(false);
-        ActivityRouter.changeActivity(App.getInstance(), ChatActivityLastMsg.class);
     }
+
+    @Override
+    public void onUpdatedData() {
+        Log.d("ControllerConnection", "onUpdatedData");
+        IConnectionUI connectionUI = iConnectionUIWeakReference.get();
+        if( connectionUI != null)
+        {
+            connectionUI.onAvailableStatusChanged(false);
+        }
+        ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
+    }
+
 
     @Override
     public void changeAvailableStatus(boolean isAvailable)
@@ -66,4 +83,13 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     }
 
 
+
+    @Override
+    public void onDetailsUpdated()
+    {
+        Log.d("ControllerConnection", "onDetailsUpdated");
+        App.getServerMediator().changeAvailableStatus(false);
+        //App.getServerMediator().unregisterDataDetailsListener(this); // its removed when ondatachange called
+        serverMediator.updateAssistantName();
+    }
 }

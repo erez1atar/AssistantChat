@@ -23,7 +23,6 @@ import sound.presentation.basic.com.erez.assistantchat.chat_controller.MyChatCon
 import sound.presentation.basic.com.erez.assistantchat.message.ChatMessage;
 import sound.presentation.basic.com.erez.assistantchat.misc.ActivityRouter;
 import sound.presentation.basic.com.erez.assistantchat.misc.App;
-import sound.presentation.basic.com.erez.assistantchat.misc.Factory;
 import sound.presentation.basic.com.erez.assistantchat.network.FirebaseMediator;
 
 public class ChatActivityLastMsg extends AppCompatActivity {
@@ -43,9 +42,10 @@ public class ChatActivityLastMsg extends AppCompatActivity {
         setContentView(R.layout.chat_activity_last_list);
 
         Log.d("chatActivityLastMsg","onCreate");
+        controller = new MyChatController();
         mediator = (FirebaseMediator) App.getServerMediator();
-        controller = new MyChatController(mediator);
-        mediator.setListener((ValueEventListener) controller);
+        controller.setServerMediator(mediator);
+        mediator.setListenerOnConnected((ValueEventListener) controller);
         mediator.executeListeningConnected();
 
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
@@ -126,9 +126,9 @@ public class ChatActivityLastMsg extends AppCompatActivity {
 
     private void sendMessage(String msg, String date, String sendingName, String ip)
     {
-        ChatMessage chatMessage = (ChatMessage) Factory.createMessage(msg, date, sendingName, ip);
+//        ChatMessage chatMessage = (ChatMessage) Factory.createMessage(msg, date, sendingName, ip);
 
-        controller.sendToServer(chatMessage);
+//        controller.sendToServer(chatMessage);
     }
 
 //    public void displayMessage(ChatMessage chatMessage) {
