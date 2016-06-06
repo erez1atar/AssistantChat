@@ -2,6 +2,7 @@ package igy.com.assistantchat.connection_ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -75,6 +76,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     @Override
     protected void onStop()
     {
+        Log.d("connectionActivity", "onStop");
         controller.changeAvailableStatus(false);
         if(! chatOpened)
         {
@@ -87,9 +89,11 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     @Override
     protected void onResume()
     {
+        Log.d("connectionActivity", "onResume");
         chatOpened = false;
         controller.addToActiveAssistants();
         progressBar.setVisibility(View.INVISIBLE);
         super.onResume();
     }
+
 }
