@@ -134,6 +134,7 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
     @Override
     protected void onStop()
     {
+        mediator.removeActiveAssistant(App.getModel().getID());
         if (! homebuttonPressed ) {
             Log.d("ChatActivity", "onStop: inside homebuttonPressed");
             finish();
