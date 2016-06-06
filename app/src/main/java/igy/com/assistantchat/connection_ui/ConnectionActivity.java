@@ -80,6 +80,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         controller.changeAvailableStatus(false);
         if(! chatOpened)
         {
+            Log.d("connectionActivity-onStop" ,"chatOpened = " + chatOpened  );
             controller.finishShift();
         }
         Utility.resetIP();

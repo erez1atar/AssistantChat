@@ -30,9 +30,15 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
 //        App.getServerMediator().changeAvailableStatus(false);
 //        App.getServerMediator().clearOpenSessionsListener();
+        IConnectionUI connectionUI = iConnectionUIWeakReference.get();
+        if( connectionUI != null)
+        {
+            connectionUI.OnChatOpened();
+        }
         App.getServerMediator().clearOpenSessionsListener();
         App.getServerMediator().registerDataDetailsListener(this);
         changeAvailableStatus(false);
+
     }
 
     @Override
