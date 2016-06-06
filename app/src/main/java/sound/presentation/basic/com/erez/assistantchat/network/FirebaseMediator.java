@@ -51,7 +51,7 @@ public class FirebaseMediator implements IServerMediator
     public FirebaseMediator()
     {
         Firebase.setAndroidContext(App.getInstance());
-        Firebase.getDefaultConfig().setPersistenceEnabled(true);
+        //Firebase.getDefaultConfig().setPersistenceEnabled(true);
         fb = new Firebase(FIREBASE_ADDRESS);
     }
 
@@ -214,7 +214,9 @@ public class FirebaseMediator implements IServerMediator
     }
 
     public void endConversation() {
-        Log.d("Debug", "FirebaseMediator::endConversation");
+        Log.d("Debug", "FirebaseMediator::endConversation: " + App.getModel().getID());
+        //fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
+        unListeningConnected();
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -233,10 +235,6 @@ public class FirebaseMediator implements IServerMediator
             }
         });
 
-
-
-        //fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
-        unListeningConnected();
     }
 
     public Firebase getMessagesDB()
@@ -250,11 +248,13 @@ public class FirebaseMediator implements IServerMediator
     }
 
     public void executeListeningConnected() {
+        Log.d("firebaseMediator", "executeListeningConnected");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addValueEventListener(listenerOnConnected);
         //.addListenerForSingleValueEvent(listenerOnConnected);//child(CONNECTED).
     }
 
     public void unListeningConnected() {
+        Log.d("firebaseMediator", "unListeningConnected");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).removeEventListener(listenerOnConnected);
 
     }

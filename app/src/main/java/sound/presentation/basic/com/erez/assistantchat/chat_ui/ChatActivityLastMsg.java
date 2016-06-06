@@ -42,7 +42,7 @@ public class ChatActivityLastMsg extends AppCompatActivity {
         setContentView(R.layout.chat_activity_last_list);
 
         Log.d("chatActivityLastMsg","onCreate");
-        controller = new MyChatController();
+        //controller = new MyChatController();
         mediator = (FirebaseMediator) App.getServerMediator();
         controller.setServerMediator(mediator);
         mediator.setListenerOnConnected((ValueEventListener) controller);
