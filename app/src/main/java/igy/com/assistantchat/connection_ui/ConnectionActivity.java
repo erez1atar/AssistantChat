@@ -76,6 +76,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     @Override
     protected void onStop()
     {
+        Log.d("connectionActivity", "onStop");
         controller.changeAvailableStatus(false);
         if(! chatOpened)
         {
@@ -89,10 +90,12 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     @Override
     protected void onResume()
     {
+        Log.d("connectionActivity", "onResume");
         chatOpened = false;
         controller.addToActiveAssistants();
         availableSwitch.setChecked(false);
         progressBar.setVisibility(View.INVISIBLE);
         super.onResume();
     }
+
 }

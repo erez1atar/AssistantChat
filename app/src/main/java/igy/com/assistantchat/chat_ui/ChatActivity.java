@@ -34,6 +34,7 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
     private Button endConversationButton;
     private TextView userIpTextView;
     private String userIp;
+    private boolean homebuttonPressed = false;
 
     //private MessagesAdapter adapterList;
     private MyFirebaseListAdapter adapterList;
@@ -66,6 +67,7 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
             @Override
             public void onClick(View v) {
                 //mediator.endConversation();
+                homebuttonPressed = true;
                 Log.d("OnClickListener - Chat", "endConversationButton");
                 finish();
             }
@@ -132,7 +134,10 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
     @Override
     protected void onStop()
     {
-       // finish();
+        if (! homebuttonPressed ) {
+            Log.d("ChatActivity", "onStop: inside homebuttonPressed");
+            finish();
+        }
         Log.d("ChatActivity", "onStop");
         mediator.endConversation();
         super.onStop();
@@ -154,6 +159,7 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
+                        homebuttonPressed = true;
                         ChatActivity.this.finish();
                     }
                 }).show();
