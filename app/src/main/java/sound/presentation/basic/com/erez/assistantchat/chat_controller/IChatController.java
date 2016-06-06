@@ -12,7 +12,7 @@ public interface IChatController
 {
 //    List<IMessage> getMessageFromServer();
     void sendToServer(IMessage msg);
-
+    void setServerMediator(IServerMediator serverMediator);
     //void sendToServer(ChatMessage chatMessage);
 //    void displayMessage(String msg);
 //    void saveLastMessage(IMessage iMessage);
