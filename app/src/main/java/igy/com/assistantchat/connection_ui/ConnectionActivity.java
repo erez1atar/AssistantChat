@@ -91,6 +91,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     {
         chatOpened = false;
         controller.addToActiveAssistants();
+        availableSwitch.setChecked(false);
         progressBar.setVisibility(View.INVISIBLE);
         super.onResume();
     }
