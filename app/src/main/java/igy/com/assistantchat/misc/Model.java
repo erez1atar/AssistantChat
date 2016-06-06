@@ -1,6 +1,6 @@
-package sound.presentation.basic.com.erez.assistantchat.misc;
+package igy.com.assistantchat.misc;
 
-import sound.presentation.basic.com.erez.assistantchat.user.IUserData;
+import igy.com.assistantchat.user.IUserData;
 
 /**
  * Model used for saving data on memory.
