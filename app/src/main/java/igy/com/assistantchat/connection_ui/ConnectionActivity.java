@@ -25,11 +25,8 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
-
         controller = new ControllerConnection(this);
-
         progressBar = (ProgressBar)findViewById(R.id.progressbarId);
-
         controller.changeAvailableStatus(false);
         controller.addToActiveAssistants();
         Utility.findUserIP();
@@ -39,12 +36,10 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         {
             availableSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     controller.changeAvailableStatus(isChecked);
                     progressBar.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
                 }
-
             });
         }
 
@@ -52,8 +47,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         if (endOfShiftButton != null) {
             endOfShiftButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     controller.finishShift();
                     finish();
                 }
@@ -63,25 +57,21 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     }
 
     @Override
-    public void onAvailableStatusChanged(boolean isAvailable)
-    {
+    public void onAvailableStatusChanged(boolean isAvailable) {
         availableSwitch.setChecked(isAvailable);
     }
 
     @Override
-    public void OnChatOpened()
-    {
+    public void OnChatOpened() {
         chatOpened = true;
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         Log.d("connectionActivity", "onStop");
         controller.changeAvailableStatus(false);
-        if(! chatOpened)
-        {
-            Log.d("connectionActivity" ,"onStop : chatOpened = " + chatOpened  );
+        if(! chatOpened) {
+            Log.d("connectionActivity" ,"onStop : chatOpened = false"  );
             controller.finishShift();
         }
         Utility.resetIP();
@@ -89,8 +79,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         Log.d("connectionActivity", "onResume");
         chatOpened = false;
         final Handler handler = new Handler();

@@ -9,26 +9,22 @@ import igy.com.assistantchat.message.IMessage;
  */
 public interface IServerMediator
 {
-    interface OpenSessionsListener
-    {
+    interface OpenSessionsListener {
         void onChatOpened();
     }
 
-    interface DataListener
-    {
+    interface DataListener {
         void onDetailsUpdated();
     }
 
-    interface ILoginAuthentication
-    {
+    interface ILoginAuthentication {
         void onLoginSuccess();
 
         void onLoginFailed();
     }
 
 
-    interface IUpdateDataAssistantListener
-    {
+    interface IUpdateDataAssistantListener {
         void onUpdatedData();
     }
 
@@ -39,18 +35,13 @@ public interface IServerMediator
     void setListenerOnConnected(ValueEventListener listener);
     void executeListeningConnected();
     void unListeningConnected();
-
     void registerOpenSessionsListener(OpenSessionsListener listener);
     void clearOpenSessionsListener();
     void registerDataDetailsListener(DataListener dataListener);
-    void unregisterDataDetailsListener(DataListener dataListener);
     void addActiveAssistant(String assistantName);
     void removeActiveAssistant(String assistantName);
     void updateAssistantName();
-    String getAssistantName();
-
     void login(ILoginAuthentication authentication);
-
-
-    public void updateUserData();
+    void updateUserData();
+    String getAssistantName();
 }

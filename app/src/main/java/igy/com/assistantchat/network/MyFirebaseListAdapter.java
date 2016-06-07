@@ -29,7 +29,6 @@ public class MyFirebaseListAdapter extends FirebaseListAdapter {
 
     public MyFirebaseListAdapter(Activity activity, Class modelClass, int modelLayout, Firebase ref, boolean lastMessagesVisible) {
         super(activity, modelClass, modelLayout, ref);
-
         this.lastMessagesVisible = lastMessagesVisible;
     }
 
@@ -122,7 +121,6 @@ public class MyFirebaseListAdapter extends FirebaseListAdapter {
         TextView msg = (TextView) view.findViewById(R.id.chat_message);
         TextView date = (TextView) view.findViewById(R.id.chat_date);
         TextView senderName = (TextView) view.findViewById(R.id.chat_name);
-        msg.setText(((ChatMessage)message).getMsg());
         TextView ip = (TextView)view.findViewById(R.id.chat_ip);
         if (ip != null){
             ip.setText(((ChatMessage)message).getIp());
@@ -141,7 +139,7 @@ public class MyFirebaseListAdapter extends FirebaseListAdapter {
             view.setBackgroundColor(Color.WHITE);
             date.setText(time);
         }
-//        date.setText(  (((ChatMessage) message).getLastMsg())   ?   ((ChatMessage) message).getDate() :   time);
         senderName.setText(((ChatMessage) message).getSendingName());
+        msg.setText(((ChatMessage)message).getMsg());
     }
 }

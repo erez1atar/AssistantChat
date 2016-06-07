@@ -35,11 +35,9 @@ public class MyLoginController
             {
                 model.setEmail(email);
                 model.setPassword(password);
-                App.getServerMediator().login(new IServerMediator.ILoginAuthentication()
-                {
+                App.getServerMediator().login(new IServerMediator.ILoginAuthentication() {
                     @Override
-                    public void onLoginSuccess()
-                    {
+                    public void onLoginSuccess() {
                         ActivityRouter.changeActivity(App.getInstance(), ConnectionActivity.class);
                     }
 
@@ -50,8 +48,7 @@ public class MyLoginController
                     }
                 });
             }
-            else
-            {
+            else {
                 ui.invalidEmailOrPassword();
             }
         }

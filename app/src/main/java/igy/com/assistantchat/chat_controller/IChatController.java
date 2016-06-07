@@ -7,13 +7,8 @@ import igy.com.assistantchat.network.IServerMediator;
 /**
  * Created by user on 04/05/2016.
  */
-public interface IChatController
-{
-//    List<IMessage> getMessageFromServer();
+public interface IChatController {
     void sendToServer(IMessage msg);
-    void setServerMediator(IServerMediator serverMediator);
-    //void sendToServer(ChatMessage chatMessage);
-//    void displayMessage(String msg);
-//    void saveLastMessage(IMessage iMessage);
 
+    void setServerMediator(IServerMediator serverMediator);
 }

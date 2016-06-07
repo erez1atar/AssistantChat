@@ -19,15 +19,8 @@ import igy.com.assistantchat.network.IServerMediator;
  */
 public class MyChatController implements IChatController, ValueEventListener {
 
-//    private WeakReference<IPresentChat> iWRPresent;
     private IServerMediator serverMediator;
     private WeakReference<IChatUI> iChatUIWeakReference;
-//    private SavingLastMessage latestMessages = new SavingLastMessage(10);
-
-    //get message according to identifier/token of user(can firebase do search into)
-//    public List<IMessage> getMessageFromServer() { //add parameters
-//        return serverMediator.getMessageHistory();
-//    }
 
     public MyChatController(IChatUI iChatUI){
         iChatUIWeakReference = new WeakReference<IChatUI>(iChatUI);
@@ -37,25 +30,6 @@ public class MyChatController implements IChatController, ValueEventListener {
     public void sendToServer(IMessage msg) {
         serverMediator.sendMessage(msg);
     }
-
-//    public void sendToServer(ChatMessage chatMessage){
-//        serverMediator.sendMessage(chatMessage);
-//    }
-
-//    public void displayMessage(ChatMessage chatMessage) {
-//        iWRPresent.displayMessage(chatMessage);
-//    }
-
-
-//
-//    @Override
-//    public void onUpdate(Object o) {
-//
-//        if (o instanceof ChatMessage) {
-//            ChatMessage chatMessage = (ChatMessage) o;
-////            iWRPresent.get().displayMessage( chatMessage );
-//        }
-//    }
 
     public void setServerMediator(IServerMediator serverMediator) {
         this.serverMediator = serverMediator;
@@ -67,26 +41,16 @@ public class MyChatController implements IChatController, ValueEventListener {
             if (! dataSnapshot.getValue(Boolean.class) ) {
                 Log.d("Debug", "AssisChat:onDataChange false");
                 serverMediator.unListeningConnected();
-                //sendDisconnectedMsgFromOtherSide();
-                //instead dialog
                 IChatUI iChatUI = iChatUIWeakReference.get();
-                if(iChatUI != null)
-                {
+                if(iChatUI != null) {
                     iChatUI.onUserDisconnected();
                 }
             }
             Log.d("Debug", "AssisChat:onDataChange");
-//        }
     }
 
     @Override
     public void onCancelled(FirebaseError firebaseError) {
 
     }
-
-    private void sendDisconnectedMsgFromOtherSide() {
-        IMessage endMsg = Factory.createMessage("userName disconnected", "", "system", "","",false);
-        sendToServer(endMsg);
-    }
-
 }

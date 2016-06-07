@@ -16,8 +16,7 @@ import igy.com.assistantchat.user.MyUserData;
 /**
  * Get access to server methods utilizing firebase as a server-side.
  */
-public class FirebaseMediator implements IServerMediator
-{
+public class FirebaseMediator implements IServerMediator {
 
     private static final String FIREBASE_ADDRESS = "https://incandescent-inferno-5809.firebaseio.com";
     private static final String ACTIVE_ASSISTANTS_CHILD = "active_assistants";
@@ -29,7 +28,6 @@ public class FirebaseMediator implements IServerMediator
     private static final String USER_DATA_CHILD = "user_data";
     private static final String NAME_USER_DATA_CHILD = "name";
     private static final String AVATAR_USER_DATA_CHILD = "avatar";
-
     private static final String ASSISTANT_NAME_CHILD = "name";
     private static final String TAG = "FirebaseMediator";
 
@@ -45,8 +43,7 @@ public class FirebaseMediator implements IServerMediator
     private DataListener dataListener;
     private ValueEventListener valueEventListenerUserDetails;
 
-    public FirebaseMediator()
-    {
+    public FirebaseMediator() {
         Firebase.setAndroidContext(App.getInstance());
         //Firebase.getDefaultConfig().setPersistenceEnabled(true);
         fb = new Firebase(FIREBASE_ADDRESS);
@@ -58,28 +55,23 @@ public class FirebaseMediator implements IServerMediator
     }
 
     @Override
-    public void changeAvailableStatus(boolean available)
-    {
+    public void changeAvailableStatus(boolean available) {
         fb.child(ASSISTANTS_DETAILS_CHILD).child(App.getModel().getID()).child(AVAILABLE_ASSISTANT_FLAG_CHILD).setValue(available);
     }
 
     @Override
-    public void login(final ILoginAuthentication authentication)
-    {
+    public void login(final ILoginAuthentication authentication) {
         final IModel model = App.getModel();
-        fb.authWithPassword(model.getEmail(), model.getPassword(), new Firebase.AuthResultHandler()
-        {
+        fb.authWithPassword(model.getEmail(), model.getPassword(), new Firebase.AuthResultHandler() {
             @Override
-            public void onAuthenticated(AuthData authData)
-            {
+            public void onAuthenticated(AuthData authData) {
                 Log.d(TAG + "_login", "authentication successful!");
                 model.setID(authData.getUid());
                 authentication.onLoginSuccess();
             }
 
             @Override
-            public void onAuthenticationError(FirebaseError firebaseError)
-            {
+            public void onAuthenticationError(FirebaseError firebaseError) {
                 Log.e(TAG + "_login", firebaseError.getMessage());
                 authentication.onLoginFailed();
             }
@@ -87,15 +79,12 @@ public class FirebaseMediator implements IServerMediator
     }
 
     @Override
-    public void updateUserData()
-    {
+    public void updateUserData() {
         final Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID());
         valueEventListenerUserDetails = new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if(dataSnapshot.hasChild(CONNECTED))
-                {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(CONNECTED)) {
                     String name = dataSnapshot.child(USER_DATA_CHILD).child(NAME_USER_DATA_CHILD).getValue(String.class);
                     int avatar = Integer.parseInt(dataSnapshot.child(USER_DATA_CHILD).child(AVATAR_USER_DATA_CHILD).getValue(String.class));
                     MyUserData myUserData = new MyUserData(name, avatar);
@@ -107,102 +96,58 @@ public class FirebaseMediator implements IServerMediator
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError)
-            {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         };
         fbUserData.addValueEventListener(valueEventListenerUserDetails);
-        /*Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(USER_DATA_CHILD);
-        Log.d("Mediator-updateUserData", "onDataChange " + App.getModel().getID());
-        if(fbUserData != null)
-        {
-            fbUserData.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
-                {
-                    Log.d("Mediator-updateUserData", "onDataChange " + "userData name = " + dataSnapshot.child(USER_DATA_CHILD).child("name").getValue(String.class));
-                    MyUserData myUserData = new MyUserData(dataSnapshot.child("name").getValue(String.class), dataSnapshot.child("avatar").getValue(Integer.class));
-                    Log.d("Mediator-updateUserData", "userData = " + myUserData.getAvatar() + " " + myUserData.getName());
-                    App.getModel().setUserData(myUserData);
-                    dataListener.onDetailsUpdated();
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError)
-                {
-                    Log.e("updateUserData", firebaseError.getMessage());
-                }
-            });
-        }*/
     }
 
     @Override
-    public void registerOpenSessionsListener(OpenSessionsListener listener)
-    {
+    public void registerOpenSessionsListener(OpenSessionsListener listener) {
         openSessionsListener = listener;
         valueEventListener = new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if(dataSnapshot.hasChild(App.getModel().getID()))
-                {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(App.getModel().getID())) {
                     Log.d("FirebaseMediator", "registerOpenSessionsListener " + "id  = " + App.getModel().getID());
                     Log.d("FirebaseMediator", "hadChild  = " + dataSnapshot.hasChild(App.getModel().getID()));
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Log.d(TAG, "onDataChange: child = " + snapshot);
                     }
                     openSessionsListener.onChatOpened();
-
                     openSessionsListener = null; //// TODO: 01/06/2016 maybe remove
                     fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
-
                 }
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError)
-            {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         };
 
         fb.child(OPENED_SESSIONS_CHILD).addValueEventListener(valueEventListener);
     }
 
     @Override
-    public void clearOpenSessionsListener()
-    {
-        if(openSessionsListener != null)
-        {
+    public void clearOpenSessionsListener() {
+        if(openSessionsListener != null) {
             openSessionsListener = null;
             fb.child(OPENED_SESSIONS_CHILD).removeEventListener(valueEventListener);
         }
     }
 
     @Override
-    public void registerDataDetailsListener(DataListener dataListener)
-    {
+    public void registerDataDetailsListener(DataListener dataListener) {
         this.dataListener = dataListener;
         updateUserData();
     }
 
-    @Override
-    public void unregisterDataDetailsListener(DataListener dataListener)
-    {
-        Firebase fbUserData = fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID());
-        fbUserData.removeEventListener(valueEventListenerUserDetails);
-    }
 
     @Override
-    public void addActiveAssistant(String assistantName)
-    {
+    public void addActiveAssistant(String assistantName) {
         fb.child(ACTIVE_ASSISTANTS_CHILD).child(assistantName).setValue(assistantName);
     }
 
     @Override
-    public void removeActiveAssistant(String assistantName)
-    {
+    public void removeActiveAssistant(String assistantName) {
         fb.child(ACTIVE_ASSISTANTS_CHILD).child(assistantName).removeValue();
     }
 
@@ -212,7 +157,6 @@ public class FirebaseMediator implements IServerMediator
 
     public void endConversation() {
         Log.d("Debug", "FirebaseMediator::endConversation: " + App.getModel().getID());
-        //fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).setValue(false);
         unListeningConnected();
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -227,43 +171,32 @@ public class FirebaseMediator implements IServerMediator
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
 
     }
 
-    public Firebase getMessagesDB()
-    {
+    public Firebase getMessagesDB() {
         return fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(MESSAGES_CHILD);
-    }
-
-    public Firebase getLastMessagesDB()
-    {
-        return fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(LAST_MESSAGES_CHILD);
     }
 
     public void executeListeningConnected() {
         Log.d("firebaseMediator", "executeListeningConnected");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).addValueEventListener(listenerOnConnected);
-        //.addListenerForSingleValueEvent(listenerOnConnected);//child(CONNECTED).
     }
 
     public void unListeningConnected() {
         Log.d("firebaseMediator", "unListeningConnected");
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(CONNECTED).removeEventListener(listenerOnConnected);
-
     }
 
 
-    public void sendMessage(IMessage message)
-    {
+    public void sendMessage(IMessage message) {
         fb.child(OPENED_SESSIONS_CHILD).child(App.getModel().getID()).child(MESSAGES_CHILD).push().setValue(message);
     }
 
 
     public void updateAssistantName() {
-
         Log.d("Debug", "getAssistantName:ID:  " + App.getModel().getID() + '\n');
         Firebase asistNameFireBase = fb.child(ASSISTANTS_DETAILS_CHILD).child(App.getModel().getID()).child(ASSISTANT_NAME_CHILD);
         asistNameFireBase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -274,8 +207,7 @@ public class FirebaseMediator implements IServerMediator
                 updateDataAssistantListener.onUpdatedData();
             }
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
 
         Log.d("Debug", "getAssistantName:name:  " + assisName + '\n');

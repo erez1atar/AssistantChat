@@ -54,11 +54,9 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
         userIp = Utility.getUserIP();
 
         Log.d("ChatActivity - onCreate", "user data : " + App.getModel().getUserData().getName() + " " + App.getModel().getUserData().getAvatar());
-        //Log.d("ChatActivity - onCreate", "user data : " + " " + App.getModel().getUserData().getAvatar());
-
-//        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
         conversationList = (ListView) findViewById(R.id.conversation_list);
         endConversationButton = (Button) findViewById(R.id.end_convrs_button);
+//        userIpTextView = (TextView)  findViewById(R.id.user_ip);
 
         sendingMsg = (EditText) findViewById(R.id.sending_msg);
         sendButton = (Button) findViewById(R.id.send_button);
@@ -76,12 +74,7 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String date, String sendingName get from server(fireBase) or another place
 
-                ////
-//                ChatMessage chatMessage = new ChatMessage("checking", currentDate(), "userCheck");
-                //displayMessage(chatMessage);//bcuse pull the msg from server and adapter add it to listView
-                ////
                 sendMessage(String.valueOf(sendingMsg.getText()), TimerUtility.currentTime(), assistantName); //maybe after put it in server it display the messages on the screen for valid that the messages on the server
                 sendingMsg.setText("");
 
@@ -90,26 +83,6 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
 
         adapterList = new MyFirebaseListAdapter(this, ChatMessage.class, R.layout.chat_user_list_item, mediator.getMessagesDB(), true);
 
-//        adapterList = new FirebaseListAdapter<ChatMessage>( this, ChatMessage.class, R.layout.item_list, mediator.getMessagesDB() )
-//        {
-//            @Override
-//            protected void populateView(View view, ChatMessage message, int i) {
-//                Log.d("fireAdap_populateView", "i is " + i + "\nand count is " + adapterList.getCount());
-//                Log.d("Debug", "populateView");
-////controller.saveLastMessage(message);
-//
-//                TextView msg = (TextView) view.findViewById(R.id.message);
-//                TextView date = (TextView) view.findViewById(R.id.date);
-//                TextView senderName = (TextView) view.findViewById(R.id.sender_name);
-//                msg.setText(message.getMsg());
-//                date.setText(currentDate());
-//                senderName.setText(message.getSendingName());
-//                userIP.setText(message.getIp());//ip only for user
-//            }
-//        };
-
-//        adapterList = new MessagesAdapter(this, R.layout.item_list);
-//        adapterList.setMsgsArr(getLastMessages());
         conversationList.setAdapter(adapterList);
     }
 
@@ -121,18 +94,9 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
         controller.sendToServer(chatMessage);
     }
 
-//    public void displayMessage(ChatMessage chatMessage) {
-//
-//    @Override
-//    protected void onStop()
-//    {
-//        mediator.endConversation();
-//        super.onStop();
-//    }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         mediator.removeActiveAssistant(App.getModel().getID());
         if (! homebuttonPressed ) {
             Log.d("ChatActivity", "onStop: inside homebuttonPressed");
@@ -157,12 +121,10 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
                 .setMessage("User disconnected")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
+                    public void onClick(DialogInterface dialog, int which) {
                         homebuttonPressed = true;
                         ChatActivity.this.finish();
                     }
                 }).show();
     }
-
 }
