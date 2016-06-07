@@ -3,4 +3,12 @@
     <string name="ChatSingleLayout_TextView_senderName">sender name:</string>
     <string name="ChatSingleLayout_TextView_message">message</string>
     <string name="ChatSingleLayout_TextView_time">time</string>
+    <string name="activityLogin_textview_email">Email :</string>
+    <string name="activityLogin_email_hint">example : igy@gmail.com</string>
+    <string name="activityLogin_textview_password">Password :</string>
+    <string name="activityLogin_button_login">Login</string>
+    <string name="activityConnection_switch_available">Available</string>
+    <string name="activityConnection_endOfShiftButtonText">end of shift</string>
+    <string name="chatActivity_sendButtonText">Send</string>
+    <string name="chatActivity_endConversationButtonText">End conversation</string>
 </resources>

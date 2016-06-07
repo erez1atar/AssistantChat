@@ -20,14 +20,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Email :"
+            android:text="@string/activityLogin_textview_email"
             android:gravity="center"/>
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:hint="example : igy@gmail.com"
+            android:hint="@string/activityLogin_email_hint"
             android:inputType="textEmailAddress"
             android:id="@+id/emailText"/>
     </LinearLayout>
@@ -41,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Password :"
+            android:text="@string/activityLogin_textview_password"
             android:gravity="center"/>
 
         <EditText
@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/loginButton"
-        android:text="Login"/>
+        android:text="@string/activityLogin_button_login"/>
 
 
 </LinearLayout>

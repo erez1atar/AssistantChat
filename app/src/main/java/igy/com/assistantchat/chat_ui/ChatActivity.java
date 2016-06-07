@@ -59,7 +59,6 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
 //        final SavingLastMessage saveLastMessage = new SavingLastMessage(10);
         conversationList = (ListView) findViewById(R.id.conversation_list);
         endConversationButton = (Button) findViewById(R.id.end_convrs_button);
-        userIpTextView = (TextView)  findViewById(R.id.user_ip);
 
         sendingMsg = (EditText) findViewById(R.id.sending_msg);
         sendButton = (Button) findViewById(R.id.send_button);
