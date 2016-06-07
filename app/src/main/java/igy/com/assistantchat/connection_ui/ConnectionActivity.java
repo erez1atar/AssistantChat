@@ -1,6 +1,7 @@
 package igy.com.assistantchat.connection_ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -80,7 +81,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         controller.changeAvailableStatus(false);
         if(! chatOpened)
         {
-            Log.d("connectionActivity-onStop" ,"chatOpened = " + chatOpened  );
+            Log.d("connectionActivity" ,"onStop : chatOpened = " + chatOpened  );
             controller.finishShift();
         }
         Utility.resetIP();
@@ -92,7 +93,13 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     {
         Log.d("connectionActivity", "onResume");
         chatOpened = false;
-        controller.addToActiveAssistants();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                controller.addToActiveAssistants();
+            }
+        }, 2000);
         availableSwitch.setChecked(false);
         progressBar.setVisibility(View.INVISIBLE);
         super.onResume();
