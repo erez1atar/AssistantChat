@@ -15,45 +15,30 @@ public final class Utility
 
     public static void findUserIP()
     {
-        //final String[] ip = {null};
-
         ipFindThread = new Thread(new Runnable() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     URL ipAdress = new URL("http://myexternalip.com/raw");
                     BufferedReader in = new BufferedReader(new InputStreamReader(ipAdress.openStream()));
                     ip = in.readLine();
                 }
-                catch (IOException e)
-                {
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
 
         ipFindThread.start();
-//        try
-//        {
-//            ipFindThread.join();
-//        }
-//        catch (InterruptedException e)
-//        {
-//            e.printStackTrace();
-//        }
     }
 
     public static String getUserIP() {
         if (ip == null) {
             findUserIP();
-            try
-            {
+            try {
                 ipFindThread.join();
             }
-            catch (InterruptedException e)
-            {
+            catch (InterruptedException e) {
                 e.printStackTrace();
             }
 

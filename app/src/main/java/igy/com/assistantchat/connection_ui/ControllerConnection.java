@@ -10,14 +10,12 @@ import igy.com.assistantchat.misc.App;
 import igy.com.assistantchat.misc.IModel;
 import igy.com.assistantchat.network.IServerMediator;
 
-public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection, IServerMediator.DataListener
-{
+public class ControllerConnection implements IServerMediator.OpenSessionsListener, IServerMediator.IUpdateDataAssistantListener , IControllerConnection, IServerMediator.DataListener {
     private IServerMediator serverMediator;
     private IModel model;
     private WeakReference<IConnectionUI> iConnectionUIWeakReference;
 
-    public ControllerConnection(IConnectionUI iConnectionUI)
-    {
+    public ControllerConnection(IConnectionUI iConnectionUI) {
         serverMediator = App.getServerMediator();
         model = App.getModel();
         serverMediator.setUpdateDataAssistantListener(this);
@@ -28,25 +26,20 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
     public void onChatOpened()
     {
         Log.d("onChatOpened", "Now transitioning to the last messages activity");
-//        App.getServerMediator().changeAvailableStatus(false);
-//        App.getServerMediator().clearOpenSessionsListener();
         IConnectionUI connectionUI = iConnectionUIWeakReference.get();
-        if( connectionUI != null)
-        {
+        if( connectionUI != null) {
             connectionUI.OnChatOpened();
         }
         App.getServerMediator().clearOpenSessionsListener();
         App.getServerMediator().registerDataDetailsListener(this);
         changeAvailableStatus(false);
-
     }
 
     @Override
     public void onUpdatedData() {
         Log.d("ControllerConnection", "onUpdatedData");
         IConnectionUI connectionUI = iConnectionUIWeakReference.get();
-        if( connectionUI != null)
-        {
+        if( connectionUI != null) {
             connectionUI.onAvailableStatusChanged(false);
         }
         ActivityRouter.changeActivity(App.getInstance(), ChatActivity.class);
@@ -54,47 +47,37 @@ public class ControllerConnection implements IServerMediator.OpenSessionsListene
 
 
     @Override
-    public void changeAvailableStatus(boolean isAvailable)
-    {
+    public void changeAvailableStatus(boolean isAvailable) {
         Log.d("changeAvailableStatus", "Available = " + isAvailable);
         serverMediator.changeAvailableStatus(isAvailable);
-        if(isAvailable)
-        {
+        if(isAvailable) {
             serverMediator.registerOpenSessionsListener(this);
         }
-        else
-        {
+        else {
             serverMediator.clearOpenSessionsListener();
         }
     }
 
     @Override
-    public void addToActiveAssistants()
-    {
+    public void addToActiveAssistants() {
         serverMediator.addActiveAssistant(model.getID());
     }
 
     @Override
-    public void removeFromActiveAssistants()
-    {
+    public void removeFromActiveAssistants() {
         serverMediator.removeActiveAssistant(model.getID());
     }
 
     @Override
-    public void finishShift()
-    {
+    public void finishShift() {
         removeFromActiveAssistants();
         changeAvailableStatus(false);
     }
 
-
-
     @Override
-    public void onDetailsUpdated()
-    {
+    public void onDetailsUpdated() {
         Log.d("ControllerConnection", "onDetailsUpdated");
         App.getServerMediator().changeAvailableStatus(false);
-        //App.getServerMediator().unregisterDataDetailsListener(this); // its removed when ondatachange called
         serverMediator.updateAssistantName();
     }
 }

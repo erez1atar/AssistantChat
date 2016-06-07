@@ -16,7 +16,6 @@ public class ChatMessage implements IMessage
 
     public ChatMessage(){}
 
-
     public ChatMessage(String msg, String date, String sendingName, String ip, String senderID, Boolean lastMsg) {
         this.msg = msg;
         this.date = date;
@@ -24,9 +23,7 @@ public class ChatMessage implements IMessage
         this.ip = ip;
         this.senderID = senderID;
         this.lastMsg = lastMsg;
-
     }
-
 
     @Override
     public String getDate() {
@@ -57,7 +54,6 @@ public class ChatMessage implements IMessage
     public Boolean getLastMsg(){
         return lastMsg;
     }
-
 
     @Override
     public String toString() {

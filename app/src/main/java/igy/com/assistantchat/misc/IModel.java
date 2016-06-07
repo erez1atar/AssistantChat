@@ -5,8 +5,7 @@ import igy.com.assistantchat.user.IUserData;
 /**
  * Interface for model to save connection data across the app components.
  */
-public interface IModel
-{
+public interface IModel {
     void setPassword(String password);
 
     String getPassword();
