@@ -15,14 +15,14 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Available"
+        android:text="@string/activityConnection_switch_available"
         android:layout_gravity="center"
         android:id="@+id/availableSwitch"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="end of shift"
+        android:text="@string/activityConnection_endOfShiftButtonText"
         android:id="@+id/end_of_shift_button"/>
 
     <ProgressBar
