@@ -39,6 +39,7 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
     //private MessagesAdapter adapterList;
     private MyFirebaseListAdapter adapterList;
     private FirebaseMediator mediator;
+    private boolean isDisconnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -103,7 +104,9 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
             finish();
         }
         Log.d("ChatActivity", "onStop");
-        mediator.endConversation();
+        if (!isDisconnected) {
+            mediator.endConversation();
+        }
         super.onStop();
     }
 
@@ -115,6 +118,8 @@ public class ChatActivity extends AppCompatActivity implements IChatUI {
 
     @Override
     public void onUserDisconnected() {
+        isDisconnected = true;
+        mediator.endConversation();
         Log.d("ChatActivity" , "onUserDisconnected");
         new AlertDialog.Builder(ChatActivity.this)
                 .setTitle("Note")
