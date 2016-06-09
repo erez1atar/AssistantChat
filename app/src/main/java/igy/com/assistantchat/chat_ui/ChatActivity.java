@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.client.ValueEventListener;
+
+import java.util.concurrent.TimeUnit;
 
 import igy.com.assistantchat.R;
 import igy.com.assistantchat.chat_controller.IChatController;

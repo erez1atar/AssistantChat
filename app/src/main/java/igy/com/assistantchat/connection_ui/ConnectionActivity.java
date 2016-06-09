@@ -9,6 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
+
 import igy.com.assistantchat.R;
 import igy.com.assistantchat.misc.Utility;
 
@@ -80,7 +83,7 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
         controller.changeAvailableStatus(false);
         if(! chatOpened)
         {
-            Log.d("connectionActivity-onStop" ,"chatOpened = " + chatOpened  );
+            Log.d("connectionActivity" ,"onStop - chatOpened = " + chatOpened  );
             controller.finishShift();
         }
         Utility.resetIP();
@@ -92,7 +95,15 @@ public class ConnectionActivity extends AppCompatActivity implements IConnection
     {
         Log.d("connectionActivity", "onResume");
         chatOpened = false;
-        controller.addToActiveAssistants();
+        android.os.Handler handler = new android.os.Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                controller.addToActiveAssistants();
+                Log.d("connectionActivity", "onResume:run");
+            }
+        }, 800);
+
         availableSwitch.setChecked(false);
         progressBar.setVisibility(View.INVISIBLE);
         super.onResume();
