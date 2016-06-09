@@ -20,9 +20,6 @@
         </activity>
         <activity android:name="igy.com.assistantchat.connection_ui.ConnectionActivity">
         </activity>
-        <activity android:name="igy.com.assistantchat.chat_ui.ChatActivityLastMsg">
-
-        </activity>
 
         <activity android:name="igy.com.assistantchat.chat_ui.ChatActivity">
 

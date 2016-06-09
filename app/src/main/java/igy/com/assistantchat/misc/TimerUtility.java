@@ -13,7 +13,6 @@ import java.util.TimeZone;
  */
 public class TimerUtility {
 
-
     public static String getFormat(SimpleDateFormat df){
         df.setTimeZone(TimeZone.getDefault() );
         return df.format( Calendar.getInstance().getTime() ) ;
@@ -23,8 +22,4 @@ public class TimerUtility {
         return getFormat(new SimpleDateFormat("HH:mm"));
     }
 
-    public static String currentFullDate(){
-        return getFormat(new SimpleDateFormat("EEE, d MMM yyyy, HH:mm"));
-
-    }
 }

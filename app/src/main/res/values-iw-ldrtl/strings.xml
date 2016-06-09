@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AssistantChat</string>
+    <string name="ChatSingleLayout_TextView_senderName">שם השולח\\ת:</string>
+    <string name="ChatSingleLayout_TextView_message">הודעה</string>
+    <string name="ChatSingleLayout_TextView_time">זמן</string>
+    <string name="activityLogin_textview_email">מייל :</string>
+    <string name="activityLogin_email_hint">example : igy@gmail.com</string>
+    <string name="activityLogin_textview_password">סיסמה :</string>
+    <string name="activityLogin_button_login">התחברות</string>
+    <string name="activityConnection_switch_available">זמין\\ה</string>
+    <string name="activityConnection_endOfShiftButtonText">סיום משמרת</string>
+    <string name="chatActivity_sendButtonText">שליחה</string>
+    <string name="chatActivity_endConversationButtonText">סיום שיחה</string>
+</resources>
